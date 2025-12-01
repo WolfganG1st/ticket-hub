@@ -1,0 +1,52 @@
+# Dependencies
+node_modules/
+yarn-error.log
+pnpm-debug.log
+
+# Build
+*dist/
+!src/scripts/dist/
+./build/
+./coverage/
+./reports/
+
+# Scripts reports
+scripts/**/reports/
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Added by Claude Task Master
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dev-debug.log
+# Dependency directories
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.windsurfrules
+.claude
+.vscode/terminals.json
+
+.husky/
+./coverage/
+AGENTS.md
+GEMINI.md
+
+tmp/
+.reference/
+.mcp.json
