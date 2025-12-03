@@ -1,25 +1,24 @@
 import { loadAccountsEnv } from 'config';
 import express, { Router } from 'express';
 import { buildAccountRouter } from './modules/accounts/infra/http/accounts-routes';
-
 import { globalErrorHandler } from './modules/accounts/infra/http/utils/global-error-handler';
+import { createDb } from './modules/accounts/infra/persistence/db';
 
 function bootstrapHttp(): void {
   const env = loadAccountsEnv();
+  const db = createDb(env.ACCOUNTS_DATABASE_URL);
 
   const app = express();
   app.use(express.json());
 
   const v1Router = Router();
-  v1Router.use('/accounts', buildAccountRouter());
+  v1Router.use('/accounts', buildAccountRouter(db));
 
   app.use('/api/v1', v1Router);
 
   app.use(globalErrorHandler);
 
-  app.listen(env.PORT, () => {
-    console.log(`${env.SERVICE_NAME} started on port ${env.PORT}`);
-  });
+  app.listen(env.PORT, () => {});
 }
 
 bootstrapHttp();

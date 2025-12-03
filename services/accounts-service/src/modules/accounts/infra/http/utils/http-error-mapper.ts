@@ -1,5 +1,5 @@
 import process from 'node:process';
-import { AppError, ConflictError, NotFoundError, ValidationError } from 'shared-kernel';
+import { AppError, ConflictError, NotFoundError, UnauthorizedError, ValidationError } from 'shared-kernel';
 import { ZodError } from 'zod';
 
 type HttpErrorResponse = {
@@ -21,6 +21,8 @@ export function mapErrorToHttpStatus(error: unknown): HttpErrorResponse {
       statusCode = 404;
     } else if (error instanceof ConflictError) {
       statusCode = 409;
+    } else if (error instanceof UnauthorizedError) {
+      statusCode = 401;
     }
 
     return {

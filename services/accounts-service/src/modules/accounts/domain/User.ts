@@ -5,31 +5,31 @@ export class User {
     public readonly id: string,
     public readonly name: string,
     public readonly email: string,
-    private role: UserRole,
-    private passwordHash: string,
+    private _role: UserRole,
+    private _passwordHash: string,
     public readonly createdAt: Date,
   ) {}
 
   public isOrganizer(): boolean {
-    return this.role === 'ORGANIZER';
+    return this._role === 'ORGANIZER';
   }
 
   public promoteToOrganizer(): void {
-    if (this.role === 'ADMIN') {
+    if (this._role === 'ADMIN') {
       throw new Error('Admin cannot be promoted to organizer');
     }
-    this.role = 'ORGANIZER';
+    this._role = 'ORGANIZER';
   }
 
-  public getRole(): UserRole {
-    return this.role;
+  public get role(): UserRole {
+    return this._role;
   }
 
-  public getPasswordHash(): string {
-    return this.passwordHash;
+  public get passwordHash(): string {
+    return this._passwordHash;
   }
 
   public setPasswordHash(hash: string): void {
-    this.passwordHash = hash;
+    this._passwordHash = hash;
   }
 }

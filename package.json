@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "pnpm -r run build",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "typecheck": "pnpm -r run tsc --noEmit",
     "lint": "biome check --write --unsafe",
     "test": "pnpm -r run test"
   },

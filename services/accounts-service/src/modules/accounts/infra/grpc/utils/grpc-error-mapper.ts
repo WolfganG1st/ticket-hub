@@ -1,5 +1,5 @@
 import { Metadata, type ServiceError, status } from '@grpc/grpc-js';
-import { AppError, ConflictError, NotFoundError, ValidationError } from 'shared-kernel';
+import { AppError, ConflictError, NotFoundError, UnauthorizedError, ValidationError } from 'shared-kernel';
 
 export function mapErrorToGrpcStatus(error: unknown): ServiceError {
   const metadata = new Metadata();
@@ -13,6 +13,8 @@ export function mapErrorToGrpcStatus(error: unknown): ServiceError {
       code = status.NOT_FOUND;
     } else if (error instanceof ConflictError) {
       code = status.ALREADY_EXISTS;
+    } else if (error instanceof UnauthorizedError) {
+      code = status.UNAUTHENTICATED;
     }
 
     return {
