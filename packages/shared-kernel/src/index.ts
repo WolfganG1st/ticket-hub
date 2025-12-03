@@ -1,4 +1,5 @@
 export const sharedKernel = 'shared-kernel';
 export * from './accounts/schemas';
 export * from './accounts/user-role';
+export * from './auth/types';
 export * from './errors/AppError';

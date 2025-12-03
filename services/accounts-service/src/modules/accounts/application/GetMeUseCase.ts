@@ -1,0 +1,38 @@
+import { NotFoundError } from 'shared-kernel';
+import type { UserRepository } from '../domain/UserRepository';
+import type { TokenService } from './TokenService';
+
+type GetMeInput = {
+  token: string;
+};
+
+type GetMeOutput = {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+};
+
+export class GetMeUseCase {
+  constructor(
+    private readonly tokenService: TokenService,
+    private readonly userRepository: UserRepository,
+  ) {}
+
+  public async execute(input: GetMeInput): Promise<GetMeOutput> {
+    const payload = await this.tokenService.verify(input.token);
+
+    const user = await this.userRepository.findById(payload.sub);
+
+    if (!user) {
+      throw new NotFoundError('User not found');
+    }
+
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    };
+  }
+}

@@ -1,11 +1,11 @@
 import { eq } from 'drizzle-orm';
 import { User } from '../../domain/User';
 import type { UserRepository } from '../../domain/UserRepository';
-import { db } from './db';
+import type { Db } from './db';
 import { newUserRowSchema, userRowSchema, users } from './schema';
 
 export class DrizzleUserRepository implements UserRepository {
-  constructor(private readonly database = db) {}
+  constructor(private readonly database: Db) {}
 
   public async findById(id: string): Promise<User | null> {
     const row = await this.database.query.users.findFirst({
@@ -40,8 +40,8 @@ export class DrizzleUserRepository implements UserRepository {
       id: user.id,
       name: user.name,
       email: user.email,
-      role: user.getRole(),
-      passwordHash: user.getPasswordHash(),
+      role: user.role,
+      passwordHash: user.passwordHash,
       createdAt: user.createdAt,
     });
 

@@ -5,6 +5,7 @@ import { parseEnvWithSchema } from './parse-env';
 
 export const accountsEnvSchema = baseEnvSchema.extend({
   ACCOUNTS_DATABASE_URL: z.string().min(1, 'ACCOUNTS_DATABASE_URL is required'),
+  ACCOUNTS_JWT_SECRET: z.string().min(1, 'ACCOUNTS_JWT_SECRET is required'),
 });
 
 export type AccountsEnv = z.infer<typeof accountsEnvSchema>;

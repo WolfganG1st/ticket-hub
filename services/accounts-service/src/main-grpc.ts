@@ -1,13 +1,17 @@
 import path from 'node:path';
 import { loadPackageDefinition, Server, ServerCredentials } from '@grpc/grpc-js';
 import { loadSync } from '@grpc/proto-loader';
+import { loadAccountsEnv } from 'config';
 import { GetUserByIdUseCase } from './modules/accounts/application/GetUserByIdUseCase';
 import { AccountsGrpcController } from './modules/accounts/infra/grpc/AccountsGrpcController';
 import type { ProtoGrpcType } from './modules/accounts/infra/grpc/generated/accounts';
 import { DrizzleUserRepository } from './modules/accounts/infra/persistence/DrizzleUserRepository';
-import { db } from './modules/accounts/infra/persistence/db';
+import { createDb } from './modules/accounts/infra/persistence/db';
 
 function bootstrapGrpc(): void {
+  const env = loadAccountsEnv();
+  const db = createDb(env.ACCOUNTS_DATABASE_URL);
+
   const protoPath = path.join(__dirname, '../../../infra/proto/accounts.proto');
 
   const packageDefinition = loadSync(protoPath, {
@@ -30,9 +34,7 @@ function bootstrapGrpc(): void {
     getUserById: controller.getUserById.bind(controller),
   });
 
-  server.bindAsync('0.0.0.0:50051', ServerCredentials.createInsecure(), () => {
-    console.log('gRPC server running on port 50051');
-  });
+  server.bindAsync('0.0.0.0:50051', ServerCredentials.createInsecure(), () => {});
 }
 
 bootstrapGrpc();

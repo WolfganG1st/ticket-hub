@@ -37,3 +37,9 @@ export class UnexpectedError extends AppError {
     super(message, 'UNEXPECTED_ERROR');
   }
 }
+
+export class UnauthorizedError extends AppError {
+  constructor(message: string) {
+    super(message, 'UNAUTHORIZED');
+  }
+}
