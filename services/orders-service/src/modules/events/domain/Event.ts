@@ -19,5 +19,6 @@ export class TicketType {
     public priceInCents: number,
     public totalQuantity: number,
     public remainingQuantity: number,
+    public readonly createdAt: Date,
   ) {}
 }
