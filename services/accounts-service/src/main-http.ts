@@ -1,4 +1,4 @@
-import { loadAccountsEnv } from 'config';
+import { loadAccountsEnv } from '@ticket-hub/config';
 import express, { Router } from 'express';
 import { buildAccountRouter } from './modules/accounts/infra/http/accounts-routes';
 import { globalErrorHandler } from './modules/accounts/infra/http/utils/global-error-handler';
