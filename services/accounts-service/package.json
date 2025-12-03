@@ -10,7 +10,7 @@
     "@grpc/grpc-js": "^1.14.1",
     "@grpc/proto-loader": "^0.8.0",
     "bcrypt": "^6.0.0",
-    "config": "workspace:*",
+    "@ticket-hub/config": "workspace:*",
     "cors": "^2.8.5",
     "drizzle": "^1.4.0",
     "drizzle-orm": "^0.44.7",

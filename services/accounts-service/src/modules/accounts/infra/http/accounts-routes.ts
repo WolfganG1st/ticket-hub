@@ -1,4 +1,4 @@
-import type { AccountsEnv } from 'config';
+import type { AccountsEnv } from '@ticket-hub/config';
 import { Router } from 'express';
 import { GetMeUseCase } from '../../application/GetMeUseCase';
 import { LoginUseCase } from '../../application/LoginUseCase';

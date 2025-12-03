@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { loadPackageDefinition, Server, ServerCredentials } from '@grpc/grpc-js';
 import { loadSync } from '@grpc/proto-loader';
-import { loadAccountsEnv } from 'config';
+import { loadAccountsEnv } from '@ticket-hub/config';
 import { GetUserByIdUseCase } from './modules/accounts/application/GetUserByIdUseCase';
 import { AccountsGrpcController } from './modules/accounts/infra/grpc/AccountsGrpcController';
 import type { ProtoGrpcType } from './modules/accounts/infra/grpc/generated/accounts';
