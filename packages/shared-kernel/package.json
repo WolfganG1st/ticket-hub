@@ -1,12 +1,12 @@
 {
-	"name": "shared-kernel",
-	"version": "0.0.0",
-	"main": "dist/index.js",
-	"types": "dist/index.d.ts",
-	"scripts": {
-		"build": "tsc"
-	},
-	"dependencies": {
-		"zod": "^4.1.13"
-	}
+  "name": "shared-kernel",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "zod": "^4.1.13"
+  }
 }
