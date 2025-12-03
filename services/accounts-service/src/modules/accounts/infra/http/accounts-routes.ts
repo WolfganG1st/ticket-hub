@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import { SignupUseCase } from '../../application/SignupUseCase';
 import { DrizzleUserRepository } from '../persistence/DrizzleUserRepository';
-import { db } from '../persistence/db';
+import type { Db } from '../persistence/db';
 import { BcryptPasswordHasher } from '../security/BcryptPasswordHasher';
 import { AccountsHttpController } from './AccountsHttpController';
 
-export function buildAccountRouter(): Router {
+export function buildAccountRouter(db: Db): Router {
   const router = Router();
   const userRepository = new DrizzleUserRepository(db);
   const passwordHasher = new BcryptPasswordHasher();

@@ -1,5 +1,3 @@
-// Original file: ../../infra/proto/accounts.proto
-
 import type * as grpc from '@grpc/grpc-js';
 import type { MethodDefinition } from '@grpc/proto-loader';
 import type {
@@ -20,12 +18,7 @@ export interface AccountsServiceClient extends grpc.Client {
   ): grpc.ClientUnaryCall;
   GetUserById(
     argument: _accounts_v1_GetUserByIdRequest,
-    metadata: grpc.Metadata,
-    callback: grpc.requestCallback<_accounts_v1_GetUserByIdResponse__Output>,
-  ): grpc.ClientUnaryCall;
-  GetUserById(
-    argument: _accounts_v1_GetUserByIdRequest,
-    options: grpc.CallOptions,
+    options: grpc.CallOptions | grpc.Metadata,
     callback: grpc.requestCallback<_accounts_v1_GetUserByIdResponse__Output>,
   ): grpc.ClientUnaryCall;
   GetUserById(
@@ -40,12 +33,7 @@ export interface AccountsServiceClient extends grpc.Client {
   ): grpc.ClientUnaryCall;
   getUserById(
     argument: _accounts_v1_GetUserByIdRequest,
-    metadata: grpc.Metadata,
-    callback: grpc.requestCallback<_accounts_v1_GetUserByIdResponse__Output>,
-  ): grpc.ClientUnaryCall;
-  getUserById(
-    argument: _accounts_v1_GetUserByIdRequest,
-    options: grpc.CallOptions,
+    options: grpc.CallOptions | grpc.Metadata,
     callback: grpc.requestCallback<_accounts_v1_GetUserByIdResponse__Output>,
   ): grpc.ClientUnaryCall;
   getUserById(
