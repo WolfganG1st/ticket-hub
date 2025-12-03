@@ -12,7 +12,7 @@ function bootstrapHttp(): void {
   app.use(express.json());
 
   const v1Router = Router();
-  v1Router.use('/accounts', buildAccountRouter(db));
+  v1Router.use('/accounts', buildAccountRouter(db, env));
 
   app.use('/api/v1', v1Router);
 
