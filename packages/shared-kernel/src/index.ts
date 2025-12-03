@@ -3,3 +3,4 @@ export * from './accounts/schemas';
 export * from './accounts/user-role';
 export * from './auth/types';
 export * from './errors/AppError';
+export * from './orders/order-status';
