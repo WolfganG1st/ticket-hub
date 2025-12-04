@@ -1,5 +1,6 @@
 import { loadAccountsEnv } from '@ticket-hub/config';
 import express, { Router } from 'express';
+import { logger } from 'shared-kernel';
 import { buildAccountRouter } from './modules/accounts/infra/http/accounts-routes';
 import { globalErrorHandler } from './modules/accounts/infra/http/utils/global-error-handler';
 import { createDb } from './modules/accounts/infra/persistence/db';
@@ -19,14 +20,14 @@ function bootstrapHttp(): void {
   app.use(globalErrorHandler);
 
   const server = app.listen(env.PORT, () => {
-    console.log(`Accounts service listening on port ${env.PORT}`);
+    logger.info(`Accounts service listening on port ${env.PORT}`);
   });
 
   server.on('close', () => {
-    console.log('Server closed');
+    logger.info('Server closed');
   });
 }
 
-console.log('Starting bootstrapHttp...');
+logger.info('Starting bootstrapHttp...');
 bootstrapHttp();
-console.log('Finished bootstrapHttp execution');
+logger.info('Finished bootstrapHttp execution');

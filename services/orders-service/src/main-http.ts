@@ -1,5 +1,6 @@
 import { loadOrdersEnv } from '@ticket-hub/config';
 import express, { Router } from 'express';
+import { logger } from 'shared-kernel';
 import { buildOrderRouter } from './infra/http/orders-routes';
 import { globalErrorHandler } from './infra/http/utils/global-error-handler';
 import { createDb } from './infra/persistence/db';
@@ -19,7 +20,7 @@ function bootstrapHttp(): void {
   app.use(globalErrorHandler);
 
   app.listen(env.PORT, () => {
-    console.log(`Orders service listening on port ${env.PORT}`);
+    logger.info(`Orders service listening on port ${env.PORT}`);
   });
 }
 
