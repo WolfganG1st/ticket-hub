@@ -18,7 +18,15 @@ function bootstrapHttp(): void {
 
   app.use(globalErrorHandler);
 
-  app.listen(env.PORT, () => {});
+  const server = app.listen(env.PORT, () => {
+    console.log(`Accounts service listening on port ${env.PORT}`);
+  });
+
+  server.on('close', () => {
+    console.log('Server closed');
+  });
 }
 
+console.log('Starting bootstrapHttp...');
 bootstrapHttp();
+console.log('Finished bootstrapHttp execution');

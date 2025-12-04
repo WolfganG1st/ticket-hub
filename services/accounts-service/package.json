@@ -4,7 +4,10 @@
   "main": "dist/main.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/main.js"
+    "start": "node --env-file=.env.accounts.dev dist/main-http.js",
+    "start:http": "node --env-file=.env.accounts.dev dist/main-http.js",
+    "start:grpc": "node --env-file=.env.accounts.dev dist/main-grpc.js",
+    "dev": "tsx watch --env-file=.env.accounts.dev src/main-http.ts"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.14.1",
