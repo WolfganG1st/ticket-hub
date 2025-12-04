@@ -18,7 +18,9 @@ function bootstrapHttp(): void {
 
   app.use(globalErrorHandler);
 
-  app.listen(env.PORT, () => {});
+  app.listen(env.PORT, () => {
+    console.log(`Orders service listening on port ${env.PORT}`);
+  });
 }
 
 bootstrapHttp();

@@ -6,11 +6,15 @@
     "build": "pnpm -r run build",
     "typecheck": "pnpm -r run tsc --noEmit",
     "lint": "biome check --write --unsafe",
-    "test": "pnpm -r run test"
+    "test": "pnpm -r run test",
+    "dev": "concurrently --names \"ACCOUNTS,ORDERS\" --prefix-colors \"blue,magenta\" \"pnpm --filter accounts-service dev\" \"pnpm --filter orders-service dev\"",
+    "start": "pnpm run dev"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.8",
     "@types/node": "^24.10.1",
+    "concurrently": "^9.2.1",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   }
 }
