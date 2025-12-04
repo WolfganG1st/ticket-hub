@@ -7,7 +7,7 @@ export class Order {
     public readonly eventId: string,
     public readonly ticketTypeId: string,
     public readonly quantity: number,
-    private status: OrderStatus,
+    private _status: OrderStatus,
     public readonly totalPriceInCents: number,
     public readonly createdAt: Date,
   ) {}
@@ -21,6 +21,10 @@ export class Order {
       throw new Error('Only pending orders can be paid');
     }
 
-    this.status = 'PAID';
+    this._status = 'PAID';
+  }
+
+  public get status(): OrderStatus {
+    return this._status;
   }
 }

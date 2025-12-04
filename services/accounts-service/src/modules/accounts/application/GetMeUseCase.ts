@@ -1,4 +1,4 @@
-import { NotFoundError } from 'shared-kernel';
+import { NotFoundError, type UserRole } from 'shared-kernel';
 import type { UserRepository } from '../domain/UserRepository';
 import type { TokenService } from './TokenService';
 
@@ -10,7 +10,7 @@ type GetMeOutput = {
   id: string;
   name: string;
   email: string;
-  role: string;
+  role: UserRole;
 };
 
 export class GetMeUseCase {
@@ -20,7 +20,7 @@ export class GetMeUseCase {
   ) {}
 
   public async execute(input: GetMeInput): Promise<GetMeOutput> {
-    const payload = await this.tokenService.verify(input.token);
+    const payload = this.tokenService.verify(input.token);
 
     const user = await this.userRepository.findById(payload.sub);
 

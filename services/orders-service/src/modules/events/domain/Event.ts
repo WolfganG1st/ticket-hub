@@ -1,3 +1,6 @@
+import { ValidationError } from 'shared-kernel';
+import { InsufficientStockError } from './errors/InsufficientStockError';
+
 export class Event {
   constructor(
     public readonly id: string,
@@ -21,4 +24,16 @@ export class TicketType {
     public remainingQuantity: number,
     public readonly createdAt: Date,
   ) {}
+
+  public reserve(quantity: number): void {
+    if (quantity <= 0) {
+      throw new ValidationError('Quantity must be greater than 0');
+    }
+
+    if (this.remainingQuantity < quantity) {
+      throw new InsufficientStockError(quantity, this.remainingQuantity);
+    }
+
+    this.remainingQuantity -= quantity;
+  }
 }

@@ -8,12 +8,12 @@ export class JwtTokenService implements TokenService {
     private readonly expiresIn: jwt.SignOptions['expiresIn'] = '1h',
   ) {}
 
-  public async sign(payload: AuthTokenPayload): Promise<string> {
-    return await jwt.sign(payload, this.secret, { expiresIn: this.expiresIn });
+  public sign(payload: AuthTokenPayload): string {
+    return jwt.sign(payload, this.secret, { expiresIn: this.expiresIn });
   }
 
-  public async verify(token: string): Promise<AuthTokenPayload> {
-    const decoded = await jwt.verify(token, this.secret);
+  public verify(token: string): AuthTokenPayload {
+    const decoded = jwt.verify(token, this.secret);
     return authTokenPayloadSchema.parse(decoded);
   }
 }
