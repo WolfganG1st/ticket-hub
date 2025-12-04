@@ -51,7 +51,7 @@ export const newTicketTypeRowSchema = createInsertSchema(ticketTypes, {
 export type TicketTypeRow = z.infer<typeof ticketTypeRowSchema>;
 export type NewTicketTypeRow = z.infer<typeof newTicketTypeRowSchema>;
 
-const status = pgEnum('status', orderStatusSchema.enum);
+const status = pgEnum('status', orderStatusSchema.options as [string, ...string[]]);
 export const orders = pgTable('orders', {
   id: varchar('id', { length: 36 }).primaryKey(),
   customerId: varchar('customer_id', { length: 36 }).notNull(),
