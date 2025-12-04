@@ -3,7 +3,7 @@ import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { userRoleSchema } from 'shared-kernel';
 import { z } from 'zod';
 
-const roles = pgEnum('roles', userRoleSchema.enum);
+const roles = pgEnum('roles', userRoleSchema.options as [string, ...string[]]);
 export const users = pgTable('users', {
   id: varchar('id', { length: 36 }).primaryKey(),
   name: varchar('name', { length: 255 }).notNull(),

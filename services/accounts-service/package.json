@@ -7,13 +7,15 @@
     "start": "node --env-file=.env.accounts.dev dist/main-http.js",
     "start:http": "node --env-file=.env.accounts.dev dist/main-http.js",
     "start:grpc": "node --env-file=.env.accounts.dev dist/main-grpc.js",
-    "dev": "tsx watch --env-file=.env.accounts.dev src/main-http.ts"
+    "dev": "tsx watch --env-file=.env.accounts.dev src/main-http.ts",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.14.1",
     "@grpc/proto-loader": "^0.8.0",
-    "bcrypt": "^6.0.0",
     "@ticket-hub/config": "workspace:*",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "drizzle": "^1.4.0",
     "drizzle-orm": "^0.44.7",
@@ -34,6 +36,8 @@
     "@types/express": "^5.0.5",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/pg": "^8.15.6",
+    "dotenv": "^17.2.3",
+    "drizzle-kit": "^0.31.7",
     "pino-pretty": "^13.1.2"
   }
 }
