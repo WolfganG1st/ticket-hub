@@ -37,7 +37,7 @@ export class LoginUseCase {
       role: user.role,
     };
 
-    const accessToken = await this.tokenService.sign(payload);
+    const accessToken = this.tokenService.sign(payload);
 
     return { accessToken };
   }

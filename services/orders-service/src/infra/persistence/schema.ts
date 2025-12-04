@@ -17,7 +17,7 @@ export const events = pgTable('events', {
 export const eventRowSchema = createSelectSchema(events);
 
 export const newEventRowSchema = createInsertSchema(events, {
-  organizerId: z.uuidv7(),
+  organizerId: z.string(),
   title: z.string(),
   description: z.string().optional(),
   venue: z.string(),
@@ -41,7 +41,7 @@ export const ticketTypes = pgTable('ticket_types', {
 export const ticketTypeRowSchema = createSelectSchema(ticketTypes);
 
 export const newTicketTypeRowSchema = createInsertSchema(ticketTypes, {
-  eventId: z.uuidv7(),
+  eventId: z.string(),
   name: z.string(),
   priceInCents: z.number(),
   totalQuantity: z.number(),
@@ -63,12 +63,14 @@ export const orders = pgTable('orders', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
-export const orderRowSchema = createSelectSchema(orders);
+export const orderRowSchema = createSelectSchema(orders, {
+  status: () => orderStatusSchema,
+});
 
 export const newOrderRowSchema = createInsertSchema(orders, {
-  customerId: z.uuidv7(),
-  eventId: z.uuidv7(),
-  ticketTypeId: z.uuidv7(),
+  customerId: z.string(),
+  eventId: z.string(),
+  ticketTypeId: z.string(),
   quantity: z.number(),
   status: () => orderStatusSchema,
   totalPriceInCents: z.number(),

@@ -1,8 +1,8 @@
 import { loadOrdersEnv } from '@ticket-hub/config';
 import express, { Router } from 'express';
-import { buildOrderRouter } from './modules/infra/http/orders-routes';
-import { globalErrorHandler } from './modules/infra/http/utils/global-error-handler';
-import { createDb } from './modules/infra/persistence/db';
+import { buildOrderRouter } from './infra/http/orders-routes';
+import { globalErrorHandler } from './infra/http/utils/global-error-handler';
+import { createDb } from './infra/persistence/db';
 
 function bootstrapHttp(): void {
   const env = loadOrdersEnv();

@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { userRoleSchema } from '../accounts/user-role';
 
 export const authTokenPayloadSchema = z.object({
-  sub: z.uuidv7(),
+  sub: z.string(),
   role: userRoleSchema,
 });
 
