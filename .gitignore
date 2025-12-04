@@ -50,3 +50,8 @@ GEMINI.md
 tmp/
 .reference/
 .mcp.json
+
+**/*.env.*.dev
+**/*.env.*.test
+**/*.env.*.stg
+**/*.env.*.prod
