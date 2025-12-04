@@ -1,6 +1,6 @@
 import { loadOrdersEnv } from '@ticket-hub/config';
 import express, { Router } from 'express';
-import { logger } from 'shared-kernel';
+import { logger, loggerMiddleware } from 'shared-kernel';
 import { buildOrderRouter } from './infra/http/orders-routes';
 import { globalErrorHandler } from './infra/http/utils/global-error-handler';
 import { createDb } from './infra/persistence/db';
@@ -11,6 +11,7 @@ function bootstrapHttp(): void {
 
   const app = express();
   app.use(express.json());
+  app.use(loggerMiddleware);
 
   const v1Router = Router();
   v1Router.use('/orders', buildOrderRouter(db, env));

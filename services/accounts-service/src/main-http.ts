@@ -1,6 +1,6 @@
 import { loadAccountsEnv } from '@ticket-hub/config';
 import express, { Router } from 'express';
-import { logger } from 'shared-kernel';
+import { logger, loggerMiddleware } from 'shared-kernel';
 import { buildAccountRouter } from './modules/accounts/infra/http/accounts-routes';
 import { globalErrorHandler } from './modules/accounts/infra/http/utils/global-error-handler';
 import { createDb } from './modules/accounts/infra/persistence/db';
@@ -11,6 +11,7 @@ function bootstrapHttp(): void {
 
   const app = express();
   app.use(express.json());
+  app.use(loggerMiddleware);
 
   const v1Router = Router();
   v1Router.use('/accounts', buildAccountRouter(db, env));
