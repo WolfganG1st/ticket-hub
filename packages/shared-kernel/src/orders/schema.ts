@@ -5,8 +5,8 @@ export const createEventRequestSchema = z.object({
   title: z.string().min(1),
   description: z.string().optional(),
   venue: z.string().min(1),
-  startsAt: z.iso.datetime(),
-  endsAt: z.iso.datetime(),
+  startsAt: z.iso.datetime({ offset: true }),
+  endsAt: z.iso.datetime({ offset: true }),
   ticketTypes: z
     .array(
       z.object({
