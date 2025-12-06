@@ -1,4 +1,5 @@
 import process from 'node:process';
+import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
 import { AppError, ConflictError, NotFoundError, UnauthorizedError, ValidationError } from 'shared-kernel';
 import { ZodError } from 'zod';
 
@@ -30,6 +31,16 @@ export function mapErrorToHttpStatus(error: unknown): HttpErrorResponse {
       body: {
         error: error.name,
         message: error.message,
+      },
+    };
+  }
+
+  if (error instanceof JsonWebTokenError || error instanceof TokenExpiredError) {
+    return {
+      statusCode: 401,
+      body: {
+        error: 'UnauthorizedError',
+        message: 'Invalid or expired token',
       },
     };
   }

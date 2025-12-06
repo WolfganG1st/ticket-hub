@@ -66,7 +66,7 @@ export class OrdersHttpController {
       quantity: parsed.quantity,
     });
 
-    res.status(201).json({ orderId: result.orderId });
+    res.status(201).json({ orderId: result.orderId, totalPriceInCents: result.totalPriceInCents });
   });
 
   public payOrder = safeHttpHandler(async (req, res) => {
