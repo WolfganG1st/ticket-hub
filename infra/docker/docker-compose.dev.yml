@@ -76,6 +76,7 @@ services:
       DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@orders-db:5432/${POSTGRES_DB:-orders}
       ORDERS_DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@orders-db:5432/${POSTGRES_DB:-orders}
       REDIS_URL: redis://redis:6379
+      ACCOUNTS_GRPC_URL: accounts-service:50051
     depends_on:
       orders-db:
         condition: service_healthy

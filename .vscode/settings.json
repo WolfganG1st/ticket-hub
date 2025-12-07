@@ -37,5 +37,8 @@
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
   },
-  "cSpell.words": ["oneofs"]
+  "cSpell.words": [
+    "oneofs",
+    "redisinsight"
+  ]
 }

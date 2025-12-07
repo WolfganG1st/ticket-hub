@@ -1,4 +1,5 @@
 export const sharedKernel = 'shared-kernel';
+export * from './accounts/grpc';
 export * from './accounts/schemas';
 export * from './accounts/user-role';
 export * from './auth/types';
