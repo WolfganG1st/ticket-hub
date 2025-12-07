@@ -16,6 +16,18 @@ services:
       timeout: 5s
       retries: 5
 
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redisinsight
+    profiles: ["infra", "stack"]
+    ports:
+      - "5540:5540"
+    volumes:
+      - redisinsight-data:/data
+    depends_on:
+      redis:
+        condition: service_healthy
+
   accounts-service:
     profiles: ["stack"]
     build:
@@ -114,6 +126,7 @@ services:
 
 volumes:
   redis-data:
+  redisinsight-data:
   accounts-db-data:
   orders-db-data:
 
