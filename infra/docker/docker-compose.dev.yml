@@ -1,6 +1,119 @@
-version: "3.8"
+
+name: ticket-hub
+
 services:
   redis:
     image: redis:alpine
+    container_name: redis
+    profiles: ["infra", "stack"]
     ports:
       - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  accounts-service:
+    profiles: ["stack"]
+    build:
+      context: ../../
+      dockerfile: services/accounts-service/Dockerfile
+    container_name: accounts-service
+    environment:
+      PORT: 3001
+      SERVICE_NAME: accounts-service
+      DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@accounts-db:5432/${POSTGRES_DB:-accounts}
+      ACCOUNTS_DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@accounts-db:5432/${POSTGRES_DB:-accounts}
+      ACCOUNTS_JWT_SECRET: ${ACCOUNTS_JWT_SECRET:-default_secret}
+    depends_on:
+      accounts-db:
+        condition: service_healthy
+    ports:
+      - "3001:3001"
+
+  accounts-db:
+    image: postgres:16-alpine
+    container_name: accounts-db
+    profiles: ["infra", "stack"]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-accounts}
+    ports:
+      - "5433:5432"
+    volumes:
+      - accounts-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  orders-service:
+    profiles: ["stack"]
+    build:
+      context: ../../
+      dockerfile: services/orders-service/Dockerfile
+    container_name: orders-service
+    environment:
+      PORT: 3002
+      SERVICE_NAME: orders-service
+      DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@orders-db:5432/${POSTGRES_DB:-orders}
+      ORDERS_DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@orders-db:5432/${POSTGRES_DB:-orders}
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      orders-db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "3002:3002"
+
+  orders-db:
+    image: postgres:16-alpine
+    container_name: orders-db
+    profiles: ["infra", "stack"]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-orders}
+    ports:
+      - "5434:5432"
+    volumes:
+      - orders-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  graphql-gateway:
+    profiles: ["stack"]
+    build:
+      context: ../../
+      dockerfile: gateway/graphql-gateway/Dockerfile
+    container_name: graphql-gateway
+    environment:
+      PORT: 4000
+      SERVICE_NAME: graphql-gateway
+      ACCOUNTS_BASE_URL: http://accounts-service:3001
+      ORDERS_BASE_URL: http://orders-service:3002
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      accounts-service:
+        condition: service_started
+      orders-service:
+        condition: service_started
+      redis:
+        condition: service_healthy
+    ports:
+      - "4000:4000"
+
+volumes:
+  redis-data:
+  accounts-db-data:
+  orders-db-data:
+
