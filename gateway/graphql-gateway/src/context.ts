@@ -8,4 +8,5 @@ export type GraphQlContext = {
   ordersApi: OrdersApi;
   cache: RedisCache;
   currentUserPromise: Promise<AccountUser | null>;
+  idempotencyKey?: string | null;
 };

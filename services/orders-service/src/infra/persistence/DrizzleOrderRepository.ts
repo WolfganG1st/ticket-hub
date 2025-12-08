@@ -99,4 +99,27 @@ export class DrizzleOrderRepository implements OrderRepository {
         },
       });
   }
+
+  public async findByIdempotencyKey(key: string): Promise<Order | null> {
+    const row = await this.database.query.orders.findFirst({
+      where: eq(orders.idempotencyKey, key),
+    });
+
+    if (!row) {
+      return null;
+    }
+
+    const parsed = orderRowSchema.parse(row);
+
+    return new Order(
+      parsed.id,
+      parsed.customerId,
+      parsed.eventId,
+      parsed.ticketTypeId,
+      parsed.quantity,
+      parsed.status,
+      parsed.totalPriceInCents,
+      parsed.createdAt,
+    );
+  }
 }

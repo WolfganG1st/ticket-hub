@@ -40,7 +40,7 @@ async function bootstrap(): Promise<void> {
       context: ({ req }: { req: express.Request }): Promise<GraphQlContext> => {
         const authHeader = req.headers.authorization;
         const token = authHeader?.startsWith('Bearer ') ? authHeader.slice('Bearer '.length) : null;
-
+        const idempotencyKey = (req.headers['x-idempotency-key'] as string | undefined) ?? null;
         const currentUserPromise = accountsApi.me(token);
 
         return Promise.resolve({
@@ -49,6 +49,7 @@ async function bootstrap(): Promise<void> {
           ordersApi,
           cache,
           currentUserPromise,
+          idempotencyKey,
         });
       },
     }),

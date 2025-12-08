@@ -60,6 +60,7 @@ export const orders = pgTable('orders', {
   quantity: integer('quantity').notNull(),
   status: status('status').notNull(),
   totalPriceInCents: integer('total_price_in_cents').notNull(),
+  idempotencyKey: varchar('idempotency_key', { length: 100 }).unique(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
@@ -74,6 +75,7 @@ export const newOrderRowSchema = createInsertSchema(orders, {
   quantity: z.number(),
   status: () => orderStatusSchema,
   totalPriceInCents: z.number(),
+  idempotencyKey: z.string().optional(),
 });
 
 export type OrderRow = z.infer<typeof orderRowSchema>;

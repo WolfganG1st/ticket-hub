@@ -9,6 +9,7 @@ type GetUserByIdOutput = {
   id: string;
   name: string;
   email: string;
+  role: string;
 };
 
 export class GetUserByIdUseCase {
@@ -25,6 +26,7 @@ export class GetUserByIdUseCase {
       id: user.id,
       name: user.name,
       email: user.email,
+      role: user.role,
     };
   }
 }

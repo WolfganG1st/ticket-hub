@@ -5,13 +5,20 @@ import { GetEventByIdUseCase } from '../../modules/events/application/GetEventBy
 import { ListEventsUseCase } from '../../modules/events/application/ListEventsUseCase';
 import { CreateOrderUseCase } from '../../modules/orders/application/CreateOrderUseCase';
 import { PayOrderUseCase } from '../../modules/orders/application/PayOrderUseCase';
+import type { AccountsGrpcClient } from '../grpc/accounts-client';
 import { DrizzleEventRepository } from '../persistence/DrizzleEventRepository';
 import { DrizzleOrderRepository } from '../persistence/DrizzleOrderRepository';
 import { DrizzleTicketTypeRepository } from '../persistence/DrizzleTicketTypeRepository';
 import type { Db } from '../persistence/db';
+import type { DistributedLock } from '../redis/DistributedLock';
 import { OrdersHttpController } from './OrdersHttpController';
 
-export function buildOrderRouter(db: Db, _env: OrdersEnv): Router {
+export function buildOrderRouter(
+  db: Db,
+  _env: OrdersEnv,
+  accountsClient: AccountsGrpcClient,
+  lock: DistributedLock,
+): Router {
   const router = Router();
 
   const eventRepository = new DrizzleEventRepository(db);
@@ -22,7 +29,13 @@ export function buildOrderRouter(db: Db, _env: OrdersEnv): Router {
   const listEventsUseCase = new ListEventsUseCase(eventRepository);
   const getEventByIdUseCase = new GetEventByIdUseCase(eventRepository, ticketTypeRepository);
 
-  const createOrderUseCase = new CreateOrderUseCase(orderRepository, eventRepository, ticketTypeRepository);
+  const createOrderUseCase = new CreateOrderUseCase(
+    orderRepository,
+    eventRepository,
+    ticketTypeRepository,
+    accountsClient,
+    lock,
+  );
   const payOrderUseCase = new PayOrderUseCase(orderRepository);
 
   const controller = new OrdersHttpController(

@@ -57,9 +57,12 @@ export class OrdersHttpController {
   });
 
   public createOrder = safeHttpHandler(async (req, res) => {
+    const idempotencyKeyHeader = req.header('Idempotency-Key') ?? null;
+
     const parsed = createOrderRequestSchema.parse(req.body);
 
     const result = await this.createOrderUseCase.execute({
+      idempotencyKey: idempotencyKeyHeader,
       customerId: parsed.customerId,
       eventId: parsed.eventId,
       ticketTypeId: parsed.ticketTypeId,

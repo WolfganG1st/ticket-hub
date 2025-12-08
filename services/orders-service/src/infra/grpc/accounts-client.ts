@@ -3,6 +3,18 @@ import { type ChannelCredentials, type ClientOptions, credentials, loadPackageDe
 import { loadSync } from '@grpc/proto-loader';
 import type { GrpcUser } from 'shared-kernel';
 
+type AccountsGrpcPackage = {
+  accounts: {
+    v1: {
+      AccountsService: new (
+        address: string,
+        creds: ChannelCredentials,
+        options?: ClientOptions,
+      ) => AccountsServiceClient;
+    };
+  };
+};
+
 type AccountsServiceClient = {
   getUserById(
     request: { id: string },
@@ -16,18 +28,6 @@ type AccountsServiceClient = {
       },
     ) => void,
   ): Promise<void>;
-};
-
-type AccountsGrpcPackage = {
-  accounts: {
-    v1: {
-      AccountsService: new (
-        address: string,
-        creds: ChannelCredentials,
-        options?: ClientOptions,
-      ) => AccountsServiceClient;
-    };
-  };
 };
 
 export type AccountsGrpcConfig = {
