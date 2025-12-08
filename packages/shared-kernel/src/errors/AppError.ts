@@ -43,3 +43,9 @@ export class UnauthorizedError extends AppError {
     super(message, 'UNAUTHORIZED');
   }
 }
+
+export class ForbiddenError extends AppError {
+  constructor(message: string) {
+    super(message, 'FORBIDDEN');
+  }
+}

@@ -32,6 +32,7 @@ type CreateEventInput = {
     priceInCents: number;
     totalQuantity: number;
   }[];
+  idempotencyKey?: string | null;
 };
 
 type CreateEventResponse = {
@@ -43,6 +44,7 @@ type CreateOrderInput = {
   eventId: string;
   ticketTypeId: string;
   quantity: number;
+  idempotencyKey?: string | null;
 };
 
 type CreateOrderResponse = {

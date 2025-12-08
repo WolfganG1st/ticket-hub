@@ -1,6 +1,13 @@
 import process from 'node:process';
 import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
-import { AppError, ConflictError, NotFoundError, UnauthorizedError, ValidationError } from 'shared-kernel';
+import {
+  AppError,
+  ConflictError,
+  ForbiddenError,
+  NotFoundError,
+  UnauthorizedError,
+  ValidationError,
+} from 'shared-kernel';
 import { ZodError } from 'zod';
 
 type HttpErrorResponse = {
@@ -24,6 +31,8 @@ export function mapErrorToHttpStatus(error: unknown): HttpErrorResponse {
       statusCode = 409;
     } else if (error instanceof UnauthorizedError) {
       statusCode = 401;
+    } else if (error instanceof ForbiddenError) {
+      statusCode = 403;
     }
 
     return {

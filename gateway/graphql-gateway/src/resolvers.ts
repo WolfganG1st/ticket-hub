@@ -84,6 +84,8 @@ export const resolvers = {
         throw new UnauthorizedError('Unauthorized');
       }
 
+      const idempotencyKey = ctx.idempotencyKey ?? null;
+
       const payload = {
         organizerId: me.id,
         title: args.input.title,
@@ -92,6 +94,7 @@ export const resolvers = {
         startsAt: args.input.startsAt,
         endsAt: args.input.endsAt,
         ticketTypes: args.input.ticketTypes,
+        idempotencyKey,
       };
 
       const result = await ctx.ordersApi.createEvent(payload);
@@ -109,11 +112,14 @@ export const resolvers = {
         throw new UnauthorizedError('Unauthorized');
       }
 
+      const idempotencyKey = ctx.idempotencyKey ?? null;
+
       const result = await ctx.ordersApi.createOrder({
         customerId: me.id,
         eventId: args.input.eventId,
         ticketTypeId: args.input.ticketTypeId,
         quantity: args.input.quantity,
+        idempotencyKey,
       });
 
       await ctx.cache.delete(`event:${args.input.eventId}`);

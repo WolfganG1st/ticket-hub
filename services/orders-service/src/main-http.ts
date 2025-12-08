@@ -1,19 +1,31 @@
+import process from 'node:process';
 import { loadOrdersEnv } from '@ticket-hub/config';
 import express from 'express';
 import { logger, loggerMiddleware } from 'shared-kernel';
+import { AccountsGrpcClient } from './infra/grpc/accounts-client';
 import { buildOrderRouter } from './infra/http/orders-routes';
 import { globalErrorHandler } from './infra/http/utils/global-error-handler';
 import { createDb } from './infra/persistence/db';
+import { RedisDistributedLock } from './infra/redis/DistributedLock';
+import { createRedisClient } from './infra/redis/redis-client';
 
-function bootstrapHttp(): void {
+async function bootstrapHttp(): Promise<void> {
   const env = loadOrdersEnv();
   const db = createDb(env.ORDERS_DATABASE_URL);
+  const redis = await createRedisClient(env.REDIS_URL);
+  const lock = new RedisDistributedLock(redis);
+
+  const accountsClient = new AccountsGrpcClient({
+    url: env.ACCOUNTS_GRPC_URL,
+    timeoutMs: 500,
+    maxRetries: 2,
+  });
 
   const app = express();
   app.use(express.json());
   app.use(loggerMiddleware);
 
-  app.use('/api/v1', buildOrderRouter(db, env));
+  app.use('/api/v1', buildOrderRouter(db, env, accountsClient, lock));
 
   app.use(globalErrorHandler);
 
@@ -22,4 +34,7 @@ function bootstrapHttp(): void {
   });
 }
 
-bootstrapHttp();
+bootstrapHttp().catch((error) => {
+  logger.error(`Failed to start Orders service, ${error}`);
+  process.exit(1);
+});
