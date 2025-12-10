@@ -7,6 +7,7 @@ import { CreateOrderUseCase } from '../../modules/orders/application/CreateOrder
 import { PayOrderUseCase } from '../../modules/orders/application/PayOrderUseCase';
 import type { AccountsGrpcClient } from '../grpc/accounts-client';
 import { DrizzleEventRepository } from '../persistence/DrizzleEventRepository';
+import { DrizzleOrderOutboxRepository } from '../persistence/DrizzleOrderOutboxRepository';
 import { DrizzleOrderRepository } from '../persistence/DrizzleOrderRepository';
 import { DrizzleTicketTypeRepository } from '../persistence/DrizzleTicketTypeRepository';
 import type { Db } from '../persistence/db';
@@ -24,6 +25,7 @@ export function buildOrderRouter(
   const eventRepository = new DrizzleEventRepository(db);
   const ticketTypeRepository = new DrizzleTicketTypeRepository(db);
   const orderRepository = new DrizzleOrderRepository(db);
+  const outboxRepository = new DrizzleOrderOutboxRepository(db);
 
   const createEventUseCase = new CreateEventUseCase(eventRepository, ticketTypeRepository);
   const listEventsUseCase = new ListEventsUseCase(eventRepository);
@@ -35,6 +37,7 @@ export function buildOrderRouter(
     ticketTypeRepository,
     accountsClient,
     lock,
+    outboxRepository,
   );
   const payOrderUseCase = new PayOrderUseCase(orderRepository);
 

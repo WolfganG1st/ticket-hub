@@ -1,4 +1,4 @@
-import { integer, pgEnum, pgTable, text, timestamp, varchar } from 'drizzle-orm/pg-core';
+import { integer, jsonb, pgEnum, pgTable, text, timestamp, varchar } from 'drizzle-orm/pg-core';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { orderStatusSchema } from 'shared-kernel';
 import { z } from 'zod';
@@ -80,3 +80,26 @@ export const newOrderRowSchema = createInsertSchema(orders, {
 
 export type OrderRow = z.infer<typeof orderRowSchema>;
 export type NewOrderRow = z.infer<typeof newOrderRowSchema>;
+
+const outboxStatus = pgEnum('order_outbox_status', ['PENDING', 'SENT', 'FAILED']);
+
+export const orderOutbox = pgTable('order_outbox', {
+  id: varchar('id', { length: 36 }).primaryKey(),
+  aggregateId: varchar('aggregate_id', { length: 36 }).notNull(),
+  type: varchar('type', { length: 64 }).notNull(),
+  payload: jsonb('payload').notNull(),
+  status: outboxStatus('status').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  processedAt: timestamp('processed_at'),
+});
+
+export const orderOutboxRowSchema = createSelectSchema(orderOutbox);
+
+export const newOrderOutboxRowSchema = createInsertSchema(orderOutbox, {
+  aggregateId: z.uuidv7(),
+  type: z.string(),
+  payload: z.unknown(),
+});
+
+export type OrderOutboxRow = z.infer<typeof orderOutboxRowSchema>;
+export type NewOrderOutboxRow = z.infer<typeof newOrderOutboxRowSchema>;

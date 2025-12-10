@@ -5,7 +5,7 @@ export async function createRedisClient(redisUrl: string): Promise<RedisClientTy
   const client: RedisClientType = createClient({ url: redisUrl });
 
   client.on('error', (err) => {
-    logger.error('Redis error', err);
+    logger.error(`Redis error ${err}`);
   });
 
   await client.connect();

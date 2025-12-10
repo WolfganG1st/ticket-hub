@@ -6,5 +6,6 @@ export * from './auth/types';
 export * from './errors/AppError';
 export * from './logger';
 export * from './logger/middleware';
+export * from './orders/order-events';
 export * from './orders/order-status';
 export * from './orders/schema';
