@@ -1,4 +1,11 @@
-import { ConflictError, ForbiddenError, type GrpcUser, NotFoundError, ValidationError } from 'shared-kernel';
+import {
+  ConflictError,
+  ForbiddenError,
+  type GrpcUser,
+  NotFoundError,
+  orderCreatedEventSchema,
+  ValidationError,
+} from 'shared-kernel';
 import { v7 as uuidv7 } from 'uuid';
 import type { AccountsGrpcClient } from '../../../infra/grpc/accounts-client';
 import type { DistributedLock } from '../../../infra/redis/DistributedLock';
@@ -7,6 +14,7 @@ import type { EventRepository } from '../../events/domain/EventRepository';
 import type { TicketTypeRepository } from '../../events/domain/TicketTypeRepository';
 import { Order } from '../../orders/domain/Order';
 import type { OrderRepository } from '../../orders/domain/OrderRepository';
+import type { OrderOutboxRepository } from './OrderOutboxRepository';
 
 type CreateOrderInput = {
   customerId: string;
@@ -28,6 +36,7 @@ export class CreateOrderUseCase {
     private readonly ticketTypeRepository: TicketTypeRepository,
     private readonly accountsClient: AccountsGrpcClient,
     private readonly lock: DistributedLock,
+    private readonly outboxRepository: OrderOutboxRepository,
   ) {}
 
   public async execute(input: CreateOrderInput): Promise<CreateOrderOutput> {
@@ -78,6 +87,19 @@ export class CreateOrderUseCase {
 
       await this.ticketTypeRepository.save(ticketType);
       await this.orderRepository.save(order, input.idempotencyKey);
+
+      const orderCreatedEvent = orderCreatedEventSchema.parse({
+        eventName: 'OrderCreated',
+        orderId,
+        customerId: user.id,
+        eventId: input.eventId,
+        ticketTypeId: input.ticketTypeId,
+        quantity: input.quantity,
+        totalPriceInCents,
+        occurredAt: now.toISOString(),
+      });
+
+      await this.outboxRepository.enqueue(orderId, 'ORDER_CREATED', orderCreatedEvent);
 
       return {
         orderId,

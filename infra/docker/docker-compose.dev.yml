@@ -84,6 +84,65 @@ services:
         condition: service_healthy
     ports:
       - "3002:3002"
+    command: >
+      sh -c "
+        pnpm run build &&
+        pnpm run start:http
+      "
+
+  orders-service-outbox:
+    profiles: ["stack"]
+    build:
+      context: ../../
+      dockerfile: services/orders-service/Dockerfile
+    container_name: orders-service-outbox
+    environment:
+      PORT: 3002
+      SERVICE_NAME: orders-service-outbox
+      DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@orders-db:5432/${POSTGRES_DB:-orders}
+      ORDERS_DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@orders-db:5432/${POSTGRES_DB:-orders}
+      REDIS_URL: redis://redis:6379
+      ACCOUNTS_GRPC_URL: accounts-service:50051
+      ORDERS_KAFKA_BROKERS: kafka:9092
+      ORDERS_OUTBOX_BATCH_SIZE: 50
+      ORDERS_OUTBOX_POLL_INTERVAL_MS: 1000
+    depends_on:
+      orders-db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    command: >
+      sh -c "
+        pnpm run build &&
+        pnpm run start:outbox
+      "
+
+  kafka:
+    image: apache/kafka
+    container_name: kafka
+    profiles: ["infra", "stack"]
+    environment:
+      KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE: "true"
+      ALLOW_PLAINTEXT_LISTENER: "yes"
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+
+  zookeeper:
+    image: bitnami/zookeeper:latest
+    container_name: zookeeper
+    profiles: ["infra", "stack"]
+    environment:
+      ALLOW_ANONYMOUS_LOGIN: "yes"
+    ports:
+      - "2181:2181"
+
 
   orders-db:
     image: postgres:16-alpine

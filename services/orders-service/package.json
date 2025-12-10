@@ -4,10 +4,12 @@
   "main": "dist/main.js",
   "scripts": {
     "build": "tsc",
-    "start": "node --env-file=.env.orders.dev dist/main-http.js",
+    "start:http": "node --env-file=.env.orders.dev dist/main-http.js",
+    "start:outbox": "node --env-file=.env.orders.dev dist/main-outbox-worker.js",
     "dev": "tsx watch --env-file=.env.orders.dev src/main-http.ts",
     "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "db:generate": "drizzle-kit generate"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.14.1",
@@ -20,6 +22,7 @@
     "express": "^5.1.0",
     "express-rate-limit": "^8.2.1",
     "helmet": "^8.1.0",
+    "kafkajs": "^2.2.4",
     "pg": "^8.16.3",
     "pino": "^10.1.0",
     "redis": "^5.10.0",
