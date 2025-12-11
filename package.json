@@ -7,6 +7,10 @@
     "typecheck": "pnpm -r run tsc --noEmit",
     "lint": "biome check --write --unsafe",
     "test": "pnpm -r run test",
+    "deps:outdated": "pnpm outdated -r",
+    "deps:update:minor": "pnpm up -r",
+    "deps:update:all": "pnpm up -r --latest",
+    "check:all": "pnpm build && pnpm typecheck && pnpm test",
     "dev": "concurrently --names \"ACCOUNTS,ORDERS,GATEWAY  \" --prefix-colors \"blue,magenta,yellow\" \"pnpm --filter accounts-service dev\" \"pnpm --filter orders-service dev\" \"pnpm --filter graphql-gateway dev\"",
     "start": "pnpm run dev"
   },
