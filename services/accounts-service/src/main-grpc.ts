@@ -1,7 +1,9 @@
 import path from 'node:path';
+import process from 'node:process';
 import { loadPackageDefinition, Server, ServerCredentials } from '@grpc/grpc-js';
 import { loadSync } from '@grpc/proto-loader';
 import { loadAccountsEnv } from '@ticket-hub/config';
+import { logger } from 'shared-kernel';
 import { GetUserByIdUseCase } from './modules/accounts/application/GetUserByIdUseCase';
 import { AccountsGrpcController } from './modules/accounts/infra/grpc/AccountsGrpcController';
 import type { ProtoGrpcType } from './modules/accounts/infra/grpc/generated/accounts';
@@ -34,7 +36,14 @@ function bootstrapGrpc(): void {
     getUserById: controller.getUserById.bind(controller),
   });
 
-  server.bindAsync('0.0.0.0:50051', ServerCredentials.createInsecure(), () => {});
+  server.bindAsync('0.0.0.0:50051', ServerCredentials.createInsecure(), (err, port) => {
+    if (err) {
+      logger.error(err);
+      process.exit(1);
+    }
+
+    logger.info(`gRPC server bound on port ${port}`);
+  });
 }
 
 bootstrapGrpc();

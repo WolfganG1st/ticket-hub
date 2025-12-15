@@ -1,5 +1,11 @@
 import path from 'node:path';
-import { type ChannelCredentials, type ClientOptions, credentials, loadPackageDefinition } from '@grpc/grpc-js';
+import {
+  type ChannelCredentials,
+  type ClientOptions,
+  credentials,
+  loadPackageDefinition,
+  Metadata,
+} from '@grpc/grpc-js';
 import { loadSync } from '@grpc/proto-loader';
 import type { GrpcUser } from 'shared-kernel';
 
@@ -15,19 +21,29 @@ type AccountsGrpcPackage = {
   };
 };
 
+type GetUserByIdResponse = {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+};
+
 type AccountsServiceClient = {
   getUserById(
     request: { id: string },
-    callback: (
-      error: Error | null,
-      response?: {
-        id: string;
-        name: string;
-        email: string;
-        role: string;
-      },
-    ) => void,
-  ): Promise<void>;
+    callback: (error: Error | null, response?: GetUserByIdResponse) => void,
+  ): void;
+  getUserById(
+    request: { id: string },
+    metadata: Metadata,
+    callback: (error: Error | null, response?: GetUserByIdResponse) => void,
+  ): void;
+  getUserById(
+    request: { id: string },
+    metadata: Metadata,
+    options: { deadline: number },
+    callback: (error: Error | null, response?: GetUserByIdResponse) => void,
+  ): void;
 };
 
 export type AccountsGrpcConfig = {
@@ -104,14 +120,17 @@ export class AccountsGrpcClient {
 
   private async callOnce<TWire>(methodName: keyof AccountsServiceClient, request: object): Promise<TWire | undefined> {
     return await new Promise<TWire | undefined>((resolve, reject) => {
-      const deadline = new Date(Date.now() + this.timeoutMs);
+      const deadline = Date.now() + this.timeoutMs;
+      const metadata = new Metadata();
 
       const method = this.client[methodName] as (
-        req: unknown,
+        req: object,
+        meta: Metadata,
+        options: { deadline: number },
         callback: (err: Error | null, res?: TWire) => void,
       ) => void;
 
-      method({ ...request, deadline }, (err: Error | null, res?: TWire) => {
+      method(request, metadata, { deadline }, (err: Error | null, res?: TWire) => {
         if (err) {
           reject(err);
           return;

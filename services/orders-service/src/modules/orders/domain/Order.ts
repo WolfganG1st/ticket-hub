@@ -12,10 +12,6 @@ export class Order {
     public readonly createdAt: Date,
   ) {}
 
-  public getStatus(): OrderStatus {
-    return this.status;
-  }
-
   public pay(): void {
     if (this.status !== 'PENDING') {
       throw new Error('Only pending orders can be paid');

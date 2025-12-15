@@ -28,15 +28,15 @@ services:
       redis:
         condition: service_healthy
 
-  accounts-service:
+  accounts-service-http:
     profiles: ["stack"]
     build:
       context: ../../
       dockerfile: services/accounts-service/Dockerfile
-    container_name: accounts-service
+    container_name: accounts-service-http
     environment:
       PORT: 3001
-      SERVICE_NAME: accounts-service
+      SERVICE_NAME: accounts-service-http
       DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@accounts-db:5432/${POSTGRES_DB:-accounts}
       ACCOUNTS_DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@accounts-db:5432/${POSTGRES_DB:-accounts}
       ACCOUNTS_JWT_SECRET: ${ACCOUNTS_JWT_SECRET:-default_secret}
@@ -45,6 +45,32 @@ services:
         condition: service_healthy
     ports:
       - "3001:3001"
+    command: >
+      sh -c "
+        pnpm run build &&
+        pnpm run start:http
+      "
+
+  accounts-service-grpc:
+    profiles: ["stack"]
+    build:
+      context: ../../
+      dockerfile: services/accounts-service/Dockerfile
+    container_name: accounts-service-grpc
+    environment:
+      PORT: 3001
+      SERVICE_NAME: accounts-service-grpc
+      DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@accounts-db:5432/${POSTGRES_DB:-accounts}
+      ACCOUNTS_DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@accounts-db:5432/${POSTGRES_DB:-accounts}
+      ACCOUNTS_JWT_SECRET: ${ACCOUNTS_JWT_SECRET:-default_secret}
+    depends_on:
+      accounts-db:
+        condition: service_healthy
+    command: >
+      sh -c "
+        pnpm run build &&
+        pnpm run start:grpc
+      "
 
   accounts-db:
     image: postgres:16-alpine
@@ -76,7 +102,7 @@ services:
       DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@orders-db:5432/${POSTGRES_DB:-orders}
       ORDERS_DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@orders-db:5432/${POSTGRES_DB:-orders}
       REDIS_URL: redis://redis:6379
-      ACCOUNTS_GRPC_URL: accounts-service:50051
+      ACCOUNTS_GRPC_URL: accounts-service-grpc:50051
     depends_on:
       orders-db:
         condition: service_healthy
@@ -171,7 +197,7 @@ services:
     environment:
       PORT: 4000
       SERVICE_NAME: graphql-gateway
-      ACCOUNTS_BASE_URL: http://accounts-service:3001
+      ACCOUNTS_BASE_URL: http://accounts-service-http:3001
       ORDERS_BASE_URL: http://orders-service:3002
       REDIS_URL: redis://redis:6379
     depends_on:

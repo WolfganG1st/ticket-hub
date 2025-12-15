@@ -89,6 +89,7 @@ export const orderOutbox = pgTable('order_outbox', {
   type: varchar('type', { length: 64 }).notNull(),
   payload: jsonb('payload').notNull(),
   status: outboxStatus('status').notNull(),
+  errorMessage: text('error_message'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   processedAt: timestamp('processed_at'),
 });

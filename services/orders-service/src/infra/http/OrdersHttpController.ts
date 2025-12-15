@@ -57,7 +57,7 @@ export class OrdersHttpController {
   });
 
   public createOrder = safeHttpHandler(async (req, res) => {
-    const idempotencyKeyHeader = req.header('Idempotency-Key') ?? null;
+    const idempotencyKeyHeader = req.header('x-idempotency-key') ?? null;
 
     const parsed = createOrderRequestSchema.parse(req.body);
 

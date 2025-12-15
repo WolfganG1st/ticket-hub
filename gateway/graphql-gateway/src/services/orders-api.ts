@@ -108,12 +108,19 @@ export class OrdersApi {
   }
 
   public async createOrder(input: CreateOrderInput): Promise<CreateOrderResponse> {
+    const { idempotencyKey, ...body } = input;
+
+    const headers: Record<string, string> = {
+      'content-type': 'application/json',
+    };
+
+    if (idempotencyKey) {
+      headers['x-idempotency-key'] = idempotencyKey;
+    }
     const response = await fetch(`${this.baseUrl}/api/v1/orders`, {
       method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(input),
+      headers,
+      body: JSON.stringify(body),
     });
 
     if (!response.ok) {

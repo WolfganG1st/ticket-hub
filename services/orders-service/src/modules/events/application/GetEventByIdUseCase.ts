@@ -19,8 +19,8 @@ type GetEventByIdOutput = {
     totalQuantity: number;
     remainingQuantity: number;
   }[];
-  startDate: string;
-  endDate: string;
+  startsAt: string;
+  endAt: string;
   createdAt: string;
 };
 
@@ -52,8 +52,8 @@ export class GetEventByIdUseCase {
         totalQuantity: ticketType.totalQuantity,
         remainingQuantity: ticketType.remainingQuantity,
       })),
-      startDate: event.startsAt.toISOString(),
-      endDate: event.endsAt.toISOString(),
+      startsAt: event.startsAt.toISOString(),
+      endAt: event.endsAt.toISOString(),
       createdAt: event.createdAt.toISOString(),
     };
   }
