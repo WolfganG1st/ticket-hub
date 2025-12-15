@@ -1,4 +1,5 @@
 import { and, eq } from 'drizzle-orm';
+import { v7 as uuidv7 } from 'uuid';
 import type {
   OrderOutboxPayload,
   OrderOutboxRepository,
@@ -12,9 +13,11 @@ export class DrizzleOrderOutboxRepository implements OrderOutboxRepository {
 
   public async enqueue(aggregateId: string, type: OrderOutboxType, payload: OrderOutboxPayload) {
     const row = newOrderOutboxRowSchema.parse({
+      id: uuidv7(),
       aggregateId,
       type,
       payload,
+      status: 'PENDING',
     });
 
     await this.database.insert(orderOutbox).values(row);
@@ -47,10 +50,10 @@ export class DrizzleOrderOutboxRepository implements OrderOutboxRepository {
       .where(and(eq(orderOutbox.id, id), eq(orderOutbox.status, 'PENDING')));
   }
 
-  public async markAsFailed(id: string): Promise<void> {
+  public async markAsFailed(id: string, errorMessage?: string): Promise<void> {
     await this.database
       .update(orderOutbox)
-      .set({ status: 'FAILED', processedAt: new Date() })
+      .set({ status: 'FAILED', processedAt: new Date(), errorMessage: errorMessage ?? null })
       .where(eq(orderOutbox.id, id));
   }
 }

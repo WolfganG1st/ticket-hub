@@ -18,6 +18,7 @@ export class AccountsGrpcController {
       id: result.id,
       name: result.name,
       email: result.email,
+      role: result.role,
     };
   });
 }

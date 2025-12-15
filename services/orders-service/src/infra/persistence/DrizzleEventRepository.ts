@@ -20,8 +20,8 @@ export class DrizzleEventRepository implements EventRepository {
 
     return new Event(
       parsed.id,
-      parsed.title,
       parsed.organizerId,
+      parsed.title,
       parsed.description,
       parsed.venue,
       parsed.startsAt,

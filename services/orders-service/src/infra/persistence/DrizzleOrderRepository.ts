@@ -72,7 +72,7 @@ export class DrizzleOrderRepository implements OrderRepository {
     );
   }
 
-  public async save(order: Order): Promise<void> {
+  public async save(order: Order, idempotencyKey?: string | null): Promise<void> {
     const payload = newOrderRowSchema.parse({
       id: order.id,
       customerId: order.customerId,
@@ -82,6 +82,7 @@ export class DrizzleOrderRepository implements OrderRepository {
       status: order.status,
       totalPriceInCents: order.totalPriceInCents,
       createdAt: order.createdAt,
+      idempotencyKey,
     });
 
     await this.database
