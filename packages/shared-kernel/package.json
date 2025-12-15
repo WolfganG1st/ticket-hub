@@ -9,6 +9,7 @@
   "dependencies": {
     "pino": "^10.1.0",
     "pino-pretty": "^13.1.2",
+    "vitest": "^4.0.15",
     "zod": "^4.1.13"
   },
   "devDependencies": {

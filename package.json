@@ -12,7 +12,8 @@
     "deps:update:all": "pnpm up -r --latest",
     "check:all": "pnpm build && pnpm typecheck && pnpm test",
     "dev": "concurrently --names \"ACCOUNTS,ORDERS,GATEWAY  \" --prefix-colors \"blue,magenta,yellow\" \"pnpm --filter accounts-service dev\" \"pnpm --filter orders-service dev\" \"pnpm --filter graphql-gateway dev\"",
-    "start": "pnpm run dev"
+    "start": "pnpm run dev",
+    "db:test:push": "pnpm --filter accounts-service db:test:push && pnpm --filter orders-service db:test:push"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.8",
