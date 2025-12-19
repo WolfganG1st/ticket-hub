@@ -5,7 +5,7 @@ import { GetEventByIdUseCase } from '../../modules/events/application/GetEventBy
 import { ListEventsUseCase } from '../../modules/events/application/ListEventsUseCase';
 import { CreateOrderUseCase } from '../../modules/orders/application/CreateOrderUseCase';
 import { PayOrderUseCase } from '../../modules/orders/application/PayOrderUseCase';
-import type { AccountsGrpcClient } from '../grpc/accounts-client';
+import type { AccountsClient } from '../accounts/AccountsClient.port';
 import { DrizzleEventRepository } from '../persistence/DrizzleEventRepository';
 import { DrizzleOrderOutboxRepository } from '../persistence/DrizzleOrderOutboxRepository';
 import { DrizzleOrderRepository } from '../persistence/DrizzleOrderRepository';
@@ -17,7 +17,7 @@ import { OrdersHttpController } from './OrdersHttpController';
 export function buildOrderRouter(
   db: Db,
   _env: OrdersEnv,
-  accountsClient: AccountsGrpcClient,
+  accountsClient: AccountsClient,
   lock: DistributedLock,
 ): Router {
   const router = Router();
