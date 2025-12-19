@@ -1,164 +1,94 @@
 {
-	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": [
-		"config:recommended",
-		":preserveSemverRanges",
-		":separateMajorReleases",
-		":semanticCommits",
-		"group:allNonMajor"
-	],
-	"rangeStrategy": "bump",
-	"enabledManagers": [
-		"npm"
-	],
-	"npm": {
-		"enabled": true
-	},
-	"npmClient": "pnpm",
-	"pnpm": {
-		"enabled": true
-	},
-	"packageRules": [
-		{
-			"matchManagers": [
-				"npm"
-			],
-			"matchPaths": [
-				"services/**",
-				"gateway/**",
-				"packages/**"
-			],
-			"groupName": "workspace dependencies",
-			"groupSlug": "workspace-deps"
-		},
-		{
-			"matchManagers": [
-				"npm"
-			],
-			"matchPackageNames": [
-				"zod",
-				"drizzle-orm",
-				"redis",
-				"pg",
-				"express"
-			],
-			"groupName": "core backend deps",
-			"groupSlug": "core-backend"
-		},
-		{
-			"matchUpdateTypes": [
-				"patch"
-			],
-			"automerge": true,
-			"automergeType": "pr",
-			"matchPackagePatterns": [
-				"^@types/",
-				"^pino",
-				"^drizzle",
-				"^zod"
-			]
-		},
-		{
-			"matchPaths": [
-				"services/accounts-service/**"
-			],
-			"addLabels": [
-				"service:accounts"
-			]
-		},
-		{
-			"matchPaths": [
-				"services/orders-service/**"
-			],
-			"addLabels": [
-				"service:orders"
-			]
-		},
-		{
-			"matchPaths": [
-				"gateway/graphql-gateway/**"
-			],
-			"addLabels": [
-				"gateway/graphql-gateway"
-			]
-		},
-		{
-			"matchPackagePatterns": [
-				"^@types/"
-			],
-			"groupName": "@types packages",
-			"groupSlug": "types"
-		},
-		{
-			"matchPackagePatterns": [
-				"^eslint",
-				"^@typescript-eslint",
-				"^@biomejs/"
-			],
-			"groupName": "linting & formatting",
-			"groupSlug": "linting"
-		},
-		{
-			"matchPackagePatterns": [
-				"^jest",
-				"^vitest",
-				"^@types/jest",
-				"^@testing-library/"
-			],
-			"groupName": "testing libraries",
-			"groupSlug": "testing"
-		},
-		{
-			"matchDatasources": [
-				"npm"
-			],
-			"matchUpdateTypes": [
-				"major"
-			],
-			"prPriority": -1,
-			"stabilityDays": 7
-		},
-		{
-			"matchDatasources": [
-				"npm"
-			],
-			"matchUpdateTypes": [
-				"patch"
-			],
-			"labels": [
-				"dependencies",
-				"patch"
-			]
-		},
-		{
-			"matchDatasources": [
-				"npm"
-			],
-			"matchUpdateTypes": [
-				"minor"
-			],
-			"labels": [
-				"dependencies",
-				"minor"
-			]
-		}
-	],
-	"schedule": [
-		"after 8:00 before 20:00 every weekday"
-	],
-	"timezone": "America/Sao_Paulo",
-	"prConcurrentLimit": 5,
-	"prHourlyLimit": 2,
-	"onboarding": true,
-	"onboardingConfig": {
-		"extends": [
-			"config:recommended"
-		]
-	},
-	"lockFileMaintenance": {
-		"enabled": true,
-		"schedule": [
-			"every weekend"
-		]
-	}
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":preserveSemverRanges",
+    ":separateMajorReleases",
+    ":semanticCommits",
+    "group:allNonMajor"
+  ],
+  "rangeStrategy": "bump",
+  "enabledManagers": ["npm"],
+  "npm": {
+    "enabled": true
+  },
+  "npmClient": "pnpm",
+  "pnpm": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "matchManagers": ["npm"],
+      "matchPaths": ["services/**", "gateway/**", "packages/**"],
+      "groupName": "workspace dependencies",
+      "groupSlug": "workspace-deps"
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["zod", "drizzle-orm", "redis", "pg", "express"],
+      "groupName": "core backend deps",
+      "groupSlug": "core-backend"
+    },
+    {
+      "matchUpdateTypes": ["patch"],
+      "automerge": true,
+      "automergeType": "pr",
+      "matchPackagePatterns": ["^@types/", "^pino", "^drizzle", "^zod"]
+    },
+    {
+      "matchPaths": ["services/accounts-service/**"],
+      "addLabels": ["service:accounts"]
+    },
+    {
+      "matchPaths": ["services/orders-service/**"],
+      "addLabels": ["service:orders"]
+    },
+    {
+      "matchPaths": ["gateway/graphql-gateway/**"],
+      "addLabels": ["gateway/graphql-gateway"]
+    },
+    {
+      "matchPackagePatterns": ["^@types/"],
+      "groupName": "@types packages",
+      "groupSlug": "types"
+    },
+    {
+      "matchPackagePatterns": ["^eslint", "^@typescript-eslint", "^@biomejs/"],
+      "groupName": "linting & formatting",
+      "groupSlug": "linting"
+    },
+    {
+      "matchPackagePatterns": ["^jest", "^vitest", "^@types/jest", "^@testing-library/"],
+      "groupName": "testing libraries",
+      "groupSlug": "testing"
+    },
+    {
+      "matchDatasources": ["npm"],
+      "matchUpdateTypes": ["major"],
+      "prPriority": -1,
+      "stabilityDays": 7
+    },
+    {
+      "matchDatasources": ["npm"],
+      "matchUpdateTypes": ["patch"],
+      "labels": ["dependencies", "patch"]
+    },
+    {
+      "matchDatasources": ["npm"],
+      "matchUpdateTypes": ["minor"],
+      "labels": ["dependencies", "minor"]
+    }
+  ],
+  "schedule": ["after 8:00 before 20:00 every weekday"],
+  "timezone": "America/Sao_Paulo",
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  "onboarding": true,
+  "onboardingConfig": {
+    "extends": ["config:recommended"]
+  },
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["every weekend"]
+  }
 }
