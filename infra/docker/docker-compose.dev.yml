@@ -147,7 +147,7 @@ services:
       "
 
   kafka:
-    image: apache/kafka
+    image: apache/kafka:3.9.0
     container_name: kafka
     profiles: ["infra", "stack"]
     environment:
@@ -162,11 +162,11 @@ services:
       - "9092:9092"
 
   zookeeper:
-    image: bitnami/zookeeper:latest
+    image: zookeeper:3.9
     container_name: zookeeper
     profiles: ["infra", "stack"]
     environment:
-      ALLOW_ANONYMOUS_LOGIN: "yes"
+      ZOO_MY_ID: 1
     ports:
       - "2181:2181"
 
