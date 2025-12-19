@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@ticket-hub/testkit": "workspace:*",
+    "@total-typescript/shoehorn": "^0.1.2",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
     "@types/pg": "^8.15.6",
