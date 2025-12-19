@@ -1,7 +1,7 @@
 import { type AuthTokenPayload, UnauthorizedError } from 'shared-kernel';
-import type { UserRepository } from '../domain/UserRepository';
-import type { PasswordHasher } from './PasswordHasher';
-import type { TokenService } from './TokenService';
+import type { UserRepository } from '../domain/UserRepository.port';
+import type { PasswordHasher } from './PasswordHasher.port';
+import type { TokenService } from './TokenService.port';
 
 type LoginInput = {
   email: string;

@@ -1,5 +1,5 @@
 import { NotFoundError } from 'shared-kernel';
-import type { UserRepository } from '../domain/UserRepository';
+import type { UserRepository } from '../domain/UserRepository.port';
 
 type GetUserByIdInput = {
   userId: string;

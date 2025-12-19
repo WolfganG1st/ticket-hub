@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm';
 import { User } from '../../domain/User';
-import type { UserRepository } from '../../domain/UserRepository';
+import type { UserRepository } from '../../domain/UserRepository.port';
 import type { Db } from './db';
 import { newUserRowSchema, userRowSchema, users } from './schema';
 

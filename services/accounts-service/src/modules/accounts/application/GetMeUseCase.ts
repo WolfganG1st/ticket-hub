@@ -1,6 +1,6 @@
 import { NotFoundError, type UserRole } from 'shared-kernel';
-import type { UserRepository } from '../domain/UserRepository';
-import type { TokenService } from './TokenService';
+import type { UserRepository } from '../domain/UserRepository.port';
+import type { TokenService } from './TokenService.port';
 
 type GetMeInput = {
   token: string;
