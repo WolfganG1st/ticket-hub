@@ -1,10 +1,10 @@
 import process from 'node:process';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@as-integrations/express5';
-import { loadGatewayEnv } from '@ticket-hub/config';
+import { type GatewayEnv, loadGatewayEnv } from '@ticket-hub/config';
 
 import cors from 'cors';
-import express from 'express';
+import express, { type Express } from 'express';
 import { logger, loggerMiddleware } from 'shared-kernel';
 import type { GraphQlContext } from './context';
 import { createRedisClient, RedisCache } from './infra/redis-cache';
@@ -13,9 +13,7 @@ import { typeDefs } from './schema';
 import { AccountsApi } from './services/accounts-api';
 import { OrdersApi } from './services/orders-api';
 
-async function bootstrap(): Promise<void> {
-  const env = loadGatewayEnv();
-
+export async function makeApp(env: GatewayEnv): Promise<Express> {
   const accountsApi = new AccountsApi(env.ACCOUNTS_BASE_URL);
   const ordersApi = new OrdersApi(env.ORDERS_BASE_URL);
 
@@ -55,12 +53,21 @@ async function bootstrap(): Promise<void> {
     }),
   );
 
+  return app;
+}
+
+async function bootstrap(): Promise<void> {
+  const env = loadGatewayEnv();
+  const app = await makeApp(env);
+
   app.listen(env.PORT, () => {
     logger.info(`GraphQl Gateway listening on port ${env.PORT}`);
   });
 }
 
-bootstrap().catch((error) => {
-  logger.error(`Failed to start GraphQl Gateway, ${error}`);
-  process.exit(1);
-});
+if (require.main === module) {
+  bootstrap().catch((error) => {
+    logger.error(`Failed to start GraphQl Gateway, ${error}`);
+    process.exit(1);
+  });
+}
