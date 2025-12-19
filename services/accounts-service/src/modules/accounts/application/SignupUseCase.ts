@@ -1,8 +1,8 @@
 import { ConflictError } from 'shared-kernel';
 import { v7 as uuidv7 } from 'uuid';
-import type { PasswordHasher } from '../application/PasswordHasher';
 import { User } from '../domain/User';
-import type { UserRepository } from '../domain/UserRepository';
+import type { UserRepository } from '../domain/UserRepository.port';
+import type { PasswordHasher } from './PasswordHasher.port';
 
 type SignupInput = {
   email: string;

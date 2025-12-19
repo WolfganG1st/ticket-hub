@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { type AuthTokenPayload, authTokenPayloadSchema } from 'shared-kernel';
-import type { TokenService } from '../../application/TokenService';
+import type { TokenService } from '../../application/TokenService.port';
 
 export class JwtTokenService implements TokenService {
   constructor(
