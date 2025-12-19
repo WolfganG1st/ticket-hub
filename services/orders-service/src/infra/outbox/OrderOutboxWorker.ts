@@ -14,6 +14,45 @@ type OrderOutboxWorker = {
   shutdown: () => Promise<void>;
 };
 
+export type ProcessOutboxBatchInput = {
+  outboxRepository: OrderOutboxRepository;
+  producer: Producer;
+  topic: string;
+  batchSize: number;
+};
+
+export const processOutboxBatch = async (input: ProcessOutboxBatchInput): Promise<void> => {
+  const { outboxRepository, producer, topic, batchSize } = input;
+
+  const pendingEntries = await outboxRepository.findPending(batchSize);
+
+  if (pendingEntries.length === 0) {
+    return;
+  }
+
+  for (const event of pendingEntries) {
+    try {
+      await producer.send({
+        topic,
+        messages: [
+          {
+            key: event.aggregateId,
+            value: JSON.stringify(event.payload),
+            headers: {
+              type: event.type,
+            },
+          },
+        ],
+      });
+
+      await outboxRepository.markAsSent(event.id);
+    } catch (error) {
+      logger.error(`Failed to publish outbox event ${event.id}, ${error}`);
+      await outboxRepository.markAsFailed(event.id, (error as Error).message);
+    }
+  }
+};
+
 export function startOrderOutboxWorker(input: StartOrderOutboxWorkerInput): OrderOutboxWorker {
   const { outboxRepository, producer, topic, batchSize, pollIntervalMs } = input;
 
@@ -30,63 +69,16 @@ export function startOrderOutboxWorker(input: StartOrderOutboxWorkerInput): Orde
     });
   };
 
-  const publishEvent = async (event: {
-    id: string;
-    aggregateId: string;
-    type: string;
-    payload: unknown;
-  }): Promise<void> => {
-    await producer.send({
-      topic,
-      messages: [
-        {
-          key: event.aggregateId,
-          value: JSON.stringify(event.payload),
-          headers: {
-            type: event.type,
-          },
-        },
-      ],
-    });
-
-    await outboxRepository.markAsSent(event.id);
-  };
-
-  const processBatch = async (
-    entries: Array<{ id: string; aggregateId: string; type: string; payload: unknown }>,
-  ): Promise<void> => {
-    for (const event of entries) {
-      if (isShuttingDown) {
-        break;
-      }
-
-      try {
-        await publishEvent(event);
-      } catch (error) {
-        logger.error(`Failed to publish outbox event ${event.id}, ${error}`);
-        await outboxRepository.markAsFailed(event.id, (error as Error).message);
-      }
-    }
-  };
-
   const processLoop = async (): Promise<void> => {
     while (!isShuttingDown) {
       try {
-        const pendingEntries = await outboxRepository.findPending(batchSize);
-
-        if (pendingEntries.length === 0) {
-          await sleepCancellable(pollIntervalMs);
-          continue;
-        }
-
-        await processBatch(pendingEntries);
+        await processOutboxBatch({ outboxRepository, producer, topic, batchSize });
+        await sleepCancellable(pollIntervalMs);
       } catch (error) {
         logger.error(`Outbox worker loop error ${error}`);
         await sleepCancellable(pollIntervalMs);
       }
     }
-
-    logger.info('Outbox worker stopped');
   };
 
   const shutdown = async (): Promise<void> => {
