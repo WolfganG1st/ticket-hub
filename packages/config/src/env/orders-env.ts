@@ -7,14 +7,10 @@ export const ordersEnvSchema = baseEnvSchema.extend({
   ORDERS_DATABASE_URL: z.string().min(1, 'ORDERS_DATABASE_URL is required'),
   REDIS_URL: z.string().min(1, 'REDIS_URL is required'),
   ACCOUNTS_GRPC_URL: z.string().min(1, 'ACCOUNTS_GRPC_URL is required'),
-  ORDERS_KAFKA_BROKERS: z.string().min(1, 'ORDERS_KAFKA_BROKERS is required'),
-  ORDERS_KAFKA_TOPIC: z.string().min(1, 'ORDERS_KAFKA_TOPIC is required'),
-  ORDERS_OUTBOX_BATCH_SIZE: z.coerce.number().int().positive().min(1, 'ORDERS_OUTBOX_BATCH_SIZE is required'),
-  ORDERS_OUTBOX_POLL_INTERVAL_MS: z.coerce
-    .number()
-    .int()
-    .positive()
-    .min(1, 'ORDERS_OUTBOX_POLL_INTERVAL_MS is required'),
+  ORDERS_KAFKA_BROKERS: z.string().optional(),
+  ORDERS_KAFKA_TOPIC: z.string().optional(),
+  ORDERS_OUTBOX_BATCH_SIZE: z.coerce.number().int().positive().optional(),
+  ORDERS_OUTBOX_POLL_INTERVAL_MS: z.coerce.number().int().positive().optional(),
 });
 
 export type OrdersEnv = z.infer<typeof ordersEnvSchema>;
