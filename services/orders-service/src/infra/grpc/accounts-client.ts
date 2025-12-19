@@ -8,6 +8,7 @@ import {
 } from '@grpc/grpc-js';
 import { loadSync } from '@grpc/proto-loader';
 import type { GrpcUser } from 'shared-kernel';
+import type { AccountsClient } from '../accounts/AccountsClient.port';
 
 type AccountsGrpcPackage = {
   accounts: {
@@ -29,10 +30,7 @@ type GetUserByIdResponse = {
 };
 
 type AccountsServiceClient = {
-  getUserById(
-    request: { id: string },
-    callback: (error: Error | null, response?: GetUserByIdResponse) => void,
-  ): void;
+  getUserById(request: { id: string }, callback: (error: Error | null, response?: GetUserByIdResponse) => void): void;
   getUserById(
     request: { id: string },
     metadata: Metadata,
@@ -52,13 +50,13 @@ export type AccountsGrpcConfig = {
   maxRetries: number;
 };
 
-export class AccountsGrpcClient {
+export class AccountsGrpcClient implements AccountsClient {
   private readonly client: AccountsServiceClient;
   private readonly timeoutMs: number;
   private readonly maxRetries: number;
 
   constructor(config: AccountsGrpcConfig) {
-    const protoPath = path.join(__dirname, '../../../../infra/proto/accounts.proto');
+    const protoPath = path.join(__dirname, '../../../../../infra/proto/accounts.proto');
     const packageDefinition = loadSync(protoPath, {
       keepCase: false,
       longs: String,
