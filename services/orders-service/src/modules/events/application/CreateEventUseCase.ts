@@ -1,8 +1,8 @@
 import { ValidationError } from 'shared-kernel';
 import { v7 as uuidv7 } from 'uuid';
 import { Event, TicketType } from '../domain/Event';
-import type { EventRepository } from '../domain/EventRepository';
-import type { TicketTypeRepository } from '../domain/TicketTypeRepository';
+import type { EventRepository } from '../domain/EventRepository.port';
+import type { TicketTypeRepository } from '../domain/TicketTypeRepository.port';
 
 type TicketTypeInput = {
   name: string;

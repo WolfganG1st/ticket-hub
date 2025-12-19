@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm';
 import { TicketType } from '../../modules/events/domain/Event';
-import type { TicketTypeRepository } from '../../modules/events/domain/TicketTypeRepository';
+import type { TicketTypeRepository } from '../../modules/events/domain/TicketTypeRepository.port';
 import type { Db } from './db';
 import { ticketTypeRowSchema, ticketTypes } from './schema';
 

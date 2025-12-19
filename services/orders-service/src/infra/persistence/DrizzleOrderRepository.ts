@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm';
 import { Order } from '../../modules/orders/domain/Order';
-import type { OrderRepository } from '../../modules/orders/domain/OrderRepository';
+import type { OrderRepository } from '../../modules/orders/domain/OrderRepository.port';
 import type { Db } from './db';
 import { newOrderRowSchema, orderRowSchema, orders } from './schema';
 

@@ -1,6 +1,6 @@
 import { NotFoundError } from 'shared-kernel';
-import type { EventRepository } from '../domain/EventRepository';
-import type { TicketTypeRepository } from '../domain/TicketTypeRepository';
+import type { EventRepository } from '../domain/EventRepository.port';
+import type { TicketTypeRepository } from '../domain/TicketTypeRepository.port';
 
 type GetEventByIdInput = {
   eventId: string;

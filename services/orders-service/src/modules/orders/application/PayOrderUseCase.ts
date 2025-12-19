@@ -1,5 +1,5 @@
 import { ConflictError, NotFoundError } from 'shared-kernel';
-import type { OrderRepository } from '../domain/OrderRepository';
+import type { OrderRepository } from '../domain/OrderRepository.port';
 
 type PayOrderInput = {
   orderId: string;

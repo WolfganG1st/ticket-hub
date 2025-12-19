@@ -7,13 +7,13 @@ import {
   ValidationError,
 } from 'shared-kernel';
 import { v7 as uuidv7 } from 'uuid';
-import type { AccountsGrpcClient } from '../../../infra/grpc/accounts-client';
+import type { AccountsClient } from '../../../infra/accounts/AccountsClient.port';
 import type { DistributedLock } from '../../../infra/redis/DistributedLock';
 import type { Event, TicketType } from '../../events/domain/Event';
-import type { EventRepository } from '../../events/domain/EventRepository';
-import type { TicketTypeRepository } from '../../events/domain/TicketTypeRepository';
+import type { EventRepository } from '../../events/domain/EventRepository.port';
+import type { TicketTypeRepository } from '../../events/domain/TicketTypeRepository.port';
 import { Order } from '../../orders/domain/Order';
-import type { OrderRepository } from '../../orders/domain/OrderRepository';
+import type { OrderRepository } from '../domain/OrderRepository.port';
 import type { OrderOutboxRepository } from './OrderOutboxRepository';
 
 type CreateOrderInput = {
@@ -34,7 +34,7 @@ export class CreateOrderUseCase {
     private readonly orderRepository: OrderRepository,
     private readonly eventRepository: EventRepository,
     private readonly ticketTypeRepository: TicketTypeRepository,
-    private readonly accountsClient: AccountsGrpcClient,
+    private readonly accountsClient: AccountsClient,
     private readonly lock: DistributedLock,
     private readonly outboxRepository: OrderOutboxRepository,
   ) {}

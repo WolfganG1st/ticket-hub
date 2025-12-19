@@ -1,4 +1,4 @@
-import type { EventRepository } from '../domain/EventRepository';
+import type { EventRepository } from '../domain/EventRepository.port';
 
 type ListEventsInput = {
   organizerId?: string;
