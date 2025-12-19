@@ -8,6 +8,7 @@ import {
   ValidationError,
 } from 'shared-kernel';
 import { ZodError } from 'zod';
+import { InsufficientStockError } from '../../../modules/events/domain/errors/InsufficientStockError';
 
 type HttpErrorResponse = {
   statusCode: number;
@@ -32,12 +33,14 @@ export function mapErrorToHttpStatus(error: unknown): HttpErrorResponse {
       statusCode = 401;
     } else if (error instanceof ForbiddenError) {
       statusCode = 403;
+    } else if (error instanceof InsufficientStockError) {
+      statusCode = 409;
     }
 
     return {
       statusCode,
       body: {
-        error: error.name,
+        error: error.code,
         message: error.message,
       },
     };
