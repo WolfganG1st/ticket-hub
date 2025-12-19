@@ -1,6 +1,7 @@
 import process from 'node:process';
 import { loadOrdersEnv } from '@ticket-hub/config';
 import express from 'express';
+import { Pool } from 'pg';
 import { logger, loggerMiddleware } from 'shared-kernel';
 import { AccountsGrpcClient } from './infra/grpc/accounts-client';
 import { buildOrderRouter } from './infra/http/orders-routes';
@@ -11,7 +12,10 @@ import { createRedisClient } from './infra/redis/redis-client';
 
 async function bootstrapHttp(): Promise<void> {
   const env = loadOrdersEnv();
-  const db = createDb(env.ORDERS_DATABASE_URL);
+  const pool = new Pool({
+    connectionString: env.ORDERS_DATABASE_URL,
+  });
+  const db = createDb(pool);
   const redis = await createRedisClient(env.REDIS_URL);
   const lock = new RedisDistributedLock(redis);
 
