@@ -7,6 +7,8 @@
     "start:http": "node --env-file=.env.orders.dev dist/main-http.js",
     "start:outbox": "node --env-file=.env.orders.dev dist/main-outbox-worker.js",
     "dev": "tsx watch --env-file=.env.orders.dev src/main-http.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "db:generate": "drizzle-kit generate",
@@ -29,9 +31,11 @@
     "redis": "^5.10.0",
     "shared-kernel": "workspace:*",
     "uuid": "^13.0.0",
+    "vitest": "^4.0.16",
     "zod": "^4.1.13"
   },
   "devDependencies": {
+    "@ticket-hub/testkit": "workspace:*",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
     "@types/pg": "^8.15.6",

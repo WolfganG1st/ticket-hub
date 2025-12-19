@@ -13,13 +13,17 @@
     "check:all": "pnpm build && pnpm typecheck && pnpm test",
     "dev": "concurrently --names \"ACCOUNTS,ORDERS,GATEWAY  \" --prefix-colors \"blue,magenta,yellow\" \"pnpm --filter accounts-service dev\" \"pnpm --filter orders-service dev\" \"pnpm --filter graphql-gateway dev\"",
     "start": "pnpm run dev",
+    "test:orders": "pnpm --filter orders-service test",
+    "test:accounts": "pnpm --filter accounts-service test",
+    "test:gateway": "pnpm --filter graphql-gateway test",
     "db:test:push": "pnpm --filter accounts-service db:test:push && pnpm --filter orders-service db:test:push"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.8",
-    "@types/node": "^24.10.1",
+    "@biomejs/biome": "^2.3.10",
+    "@types/node": "^24.10.4",
     "concurrently": "^9.2.1",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.16"
   }
 }
