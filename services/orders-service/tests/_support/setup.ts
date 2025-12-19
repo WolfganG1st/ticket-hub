@@ -1,4 +1,7 @@
+import process from 'node:process';
 import { afterAll, beforeAll, beforeEach } from 'vitest';
+
+process.env.TZ = 'UTC';
 
 import type { OrdersTestContext } from './context';
 import { createOrdersTestContext } from './context';

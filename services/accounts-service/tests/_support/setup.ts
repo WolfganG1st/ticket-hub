@@ -1,5 +1,8 @@
+import process from 'node:process';
 import { afterAll, beforeAll, beforeEach } from 'vitest';
 import { type AccountsTestContext, createAccountsTestContext } from './context';
+
+process.env.TZ = 'UTC';
 
 declare global {
   var __accountsTestContext: AccountsTestContext | undefined;
