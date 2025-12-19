@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm';
 import { Event } from '../../modules/events/domain/Event';
-import type { EventRepository } from '../../modules/events/domain/EventRepository';
+import type { EventRepository } from '../../modules/events/domain/EventRepository.port';
 import type { Db } from './db';
 import { eventRowSchema, events } from './schema';
 
