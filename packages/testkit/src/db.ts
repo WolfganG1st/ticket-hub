@@ -15,7 +15,9 @@ export async function ensureSchemaAndTables(pool: Pool, schemaName: string, tabl
 }
 
 export async function truncateTables(pool: Pool, schemaName: string, tableNames: string[]): Promise<void> {
-  if (tableNames.length === 0) return;
+  if (tableNames.length === 0) {
+    return;
+  }
   const tables = tableNames.map((t) => `"${schemaName}"."${t}"`).join(', ');
   await pool.query(`TRUNCATE TABLE ${tables};`);
 }

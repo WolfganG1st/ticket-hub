@@ -197,9 +197,7 @@
         "orders_idempotency_key_unique": {
           "name": "orders_idempotency_key_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "idempotency_key"
-          ]
+          "columns": ["idempotency_key"]
         }
       },
       "policies": {},
@@ -267,11 +265,7 @@
     "public.status": {
       "name": "status",
       "schema": "public",
-      "values": [
-        "PENDING",
-        "PAID",
-        "CANCELLED"
-      ]
+      "values": ["PENDING", "PAID", "CANCELLED"]
     }
   },
   "schemas": {},
