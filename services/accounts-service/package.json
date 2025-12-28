@@ -4,9 +4,9 @@
   "main": "dist/main.js",
   "scripts": {
     "build": "tsc",
-    "start": "node --env-file=.env.accounts.dev dist/main-http.js",
-    "start:http": "node --env-file=.env.accounts.dev dist/main-http.js",
-    "start:grpc": "node --env-file=.env.accounts.dev dist/main-grpc.js",
+    "start": "node --env-file=.env.accounts.dev dist/src/main-http.js",
+    "start:http": "node --env-file=.env.accounts.dev dist/src/main-http.js",
+    "start:grpc": "node --env-file=.env.accounts.dev dist/src/main-grpc.js",
     "dev": "tsx watch --env-file=.env.accounts.dev src/main-http.ts",
     "test": "vitest run",
     "db:push": "drizzle-kit push",
