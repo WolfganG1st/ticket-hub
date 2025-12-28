@@ -10,6 +10,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY packages ./packages
 COPY services/orders-service ./services/orders-service
+COPY infra ./infra
 
 # Install dependencies
 RUN pnpm install --frozen-lockfile
@@ -19,6 +20,7 @@ WORKDIR /app
 COPY --from=dependencies /app/node_modules ./node_modules
 COPY --from=dependencies /app/packages ./packages
 COPY --from=dependencies /app/services/orders-service ./services/orders-service
+COPY --from=dependencies /app/infra ./infra
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 # Build the service and its dependencies
