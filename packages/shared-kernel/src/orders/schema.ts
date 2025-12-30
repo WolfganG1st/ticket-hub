@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const createEventRequestSchema = z.object({
   organizerId: z.string().min(1),
   title: z.string().min(1),
-  description: z.string().optional(),
+  description: z.string().nullish(),
   venue: z.string().min(1),
   startsAt: z.iso.datetime({ offset: true }),
   endsAt: z.iso.datetime({ offset: true }),

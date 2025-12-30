@@ -16,6 +16,7 @@ export class OrdersHttpController {
   ) {}
 
   public createEvent = safeHttpHandler(async (req, res) => {
+    const idempotencyKeyHeader = req.header('x-idempotency-key') ?? null;
     const parsed = createEventRequestSchema.parse(req.body);
 
     const startsAt = new Date(parsed.startsAt);
@@ -26,6 +27,7 @@ export class OrdersHttpController {
     }
 
     const result = await this.createEventUseCase.execute({
+      idempotencyKey: idempotencyKeyHeader,
       organizerId: parsed.organizerId,
       title: parsed.title,
       description: parsed.description,
@@ -58,7 +60,6 @@ export class OrdersHttpController {
 
   public createOrder = safeHttpHandler(async (req, res) => {
     const idempotencyKeyHeader = req.header('x-idempotency-key') ?? null;
-
     const parsed = createOrderRequestSchema.parse(req.body);
 
     const result = await this.createOrderUseCase.execute({
