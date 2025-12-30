@@ -10,7 +10,7 @@ test('signup + login + me', async () => {
     .send({
       email: 'test@example.com',
       name: 'Test User',
-      password: '12345678',
+      password: 'Password123',
     })
     .expect(201);
 
@@ -18,7 +18,7 @@ test('signup + login + me', async () => {
     .post('/api/v1/login')
     .send({
       email: 'test@example.com',
-      password: '12345678',
+      password: 'Password123',
     })
     .expect(200);
 
