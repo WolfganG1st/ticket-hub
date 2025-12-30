@@ -3,6 +3,7 @@ import type { CreateEventUseCase } from '../../modules/events/application/Create
 import type { GetEventByIdUseCase } from '../../modules/events/application/GetEventByIdUseCase';
 import type { ListEventsUseCase } from '../../modules/events/application/ListEventsUseCase';
 import type { CreateOrderUseCase } from '../../modules/orders/application/CreateOrderUseCase';
+import type { GetOrderByIdUseCase } from '../../modules/orders/application/GetOrderByIdUseCase';
 import type { PayOrderUseCase } from '../../modules/orders/application/PayOrderUseCase';
 import { safeHttpHandler } from './utils/safe-http-handler';
 
@@ -12,6 +13,7 @@ export class OrdersHttpController {
     private readonly listEventsUseCase: ListEventsUseCase,
     private readonly getEventByIdUseCase: GetEventByIdUseCase,
     private readonly createOrderUseCase: CreateOrderUseCase,
+    private readonly getOrderByIdUseCase: GetOrderByIdUseCase,
     private readonly payOrderUseCase: PayOrderUseCase,
   ) {}
 
@@ -71,6 +73,14 @@ export class OrdersHttpController {
     });
 
     res.status(201).json({ orderId: result.orderId, totalPriceInCents: result.totalPriceInCents });
+  });
+
+  public getOrderById = safeHttpHandler(async (req, res) => {
+    const { id } = req.params;
+
+    const result = await this.getOrderByIdUseCase.execute({ orderId: id });
+
+    res.status(200).json(result);
   });
 
   public payOrder = safeHttpHandler(async (req, res) => {

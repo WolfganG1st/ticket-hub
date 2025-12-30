@@ -32,8 +32,12 @@ export class CreateEventUseCase {
   ) {}
 
   public async execute(input: CreateEventInput): Promise<CreateEventOutput> {
-    if (input.endsAt <= input.startsAt || input.startsAt <= new Date()) {
+    if (input.endsAt <= input.startsAt) {
       throw new ValidationError('Event end date must be after start date');
+    }
+
+    if (input.startsAt <= new Date()) {
+      throw new ValidationError('Event start date must be after current date');
     }
 
     if (input.idempotencyKey) {
