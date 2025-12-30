@@ -21,7 +21,7 @@
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "drizzle": "^1.4.0",
-    "drizzle-orm": "^0.44.7",
+    "drizzle-orm": "^0.45.0",
     "drizzle-zod": "^0.8.3",
     "express": "^5.1.0",
     "express-rate-limit": "^8.2.1",
