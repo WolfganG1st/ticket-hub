@@ -10,6 +10,7 @@
     "dev": "tsx watch --env-file=.env.accounts.dev src/main-http.ts",
     "test": "vitest run",
     "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
     "db:studio": "drizzle-kit studio",
     "db:test:push": "DATABASE_URL=postgres://postgres:postgres@localhost:5433/accounts_test drizzle-kit push"
   },

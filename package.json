@@ -16,12 +16,20 @@
     "test:orders": "pnpm --filter orders-service test",
     "test:accounts": "pnpm --filter accounts-service test",
     "test:gateway": "pnpm --filter graphql-gateway test",
-    "db:test:push": "pnpm --filter accounts-service db:test:push && pnpm --filter orders-service db:test:push"
+    "db:studio": "drizzle-kit studio",
+    "db:test:push": "pnpm --filter accounts-service db:test:push && pnpm --filter orders-service db:test:push",
+    "db:studio:accounts": "pnpm --filter accounts-service db:studio",
+    "db:studio:orders": "pnpm --filter orders-service db:studio",
+    "db:push:accounts": "pnpm --filter accounts-service db:push",
+    "db:push:orders": "pnpm --filter orders-service db:push",
+    "db:generate:accounts": "pnpm --filter accounts-service db:generate",
+    "db:generate:orders": "pnpm --filter orders-service db:generate"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.10",
     "@types/node": "^24.10.4",
     "concurrently": "^9.2.1",
+    "drizzle-kit": "^0.31.7",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.16"
