@@ -47,15 +47,15 @@
       ],
       "automerge": true,
       "automergeType": "pr",
-      "matchPackagePatterns": [
-        "^@types/",
-        "^pino",
-        "^drizzle",
-        "^zod"
+      "matchPackageNames": [
+        "/^@types//",
+        "/^pino/",
+        "/^drizzle/",
+        "/^zod/"
       ]
     },
     {
-      "matchPaths": [
+      "matchFileNames": [
         "services/accounts-service/**"
       ],
       "addLabels": [
@@ -63,7 +63,7 @@
       ]
     },
     {
-      "matchPaths": [
+      "matchFileNames": [
         "services/orders-service/**"
       ],
       "addLabels": [
@@ -71,7 +71,7 @@
       ]
     },
     {
-      "matchPaths": [
+      "matchFileNames": [
         "gateway/graphql-gateway/**"
       ],
       "addLabels": [
@@ -79,30 +79,30 @@
       ]
     },
     {
-      "matchPackagePatterns": [
-        "^@types/"
-      ],
       "groupName": "@types packages",
-      "groupSlug": "types"
+      "groupSlug": "types",
+      "matchPackageNames": [
+        "/^@types//"
+      ]
     },
     {
-      "matchPackagePatterns": [
-        "^eslint",
-        "^@typescript-eslint",
-        "^@biomejs/"
-      ],
       "groupName": "linting & formatting",
-      "groupSlug": "linting"
+      "groupSlug": "linting",
+      "matchPackageNames": [
+        "/^eslint/",
+        "/^@typescript-eslint/",
+        "/^@biomejs//"
+      ]
     },
     {
-      "matchPackagePatterns": [
-        "^jest",
-        "^vitest",
-        "^@types/jest",
-        "^@testing-library/"
-      ],
       "groupName": "testing libraries",
-      "groupSlug": "testing"
+      "groupSlug": "testing",
+      "matchPackageNames": [
+        "/^jest/",
+        "/^vitest/",
+        "/^@types/jest/",
+        "/^@testing-library//"
+      ]
     },
     {
       "matchDatasources": [
@@ -112,7 +112,7 @@
         "major"
       ],
       "prPriority": -1,
-      "stabilityDays": 7
+      "minimumReleaseAge": "7 days"
     },
     {
       "matchDatasources": [
