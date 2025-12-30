@@ -1,4 +1,4 @@
-import { ConflictError, NotFoundError } from 'shared-kernel';
+import { NotFoundError } from 'shared-kernel';
 import type { OrderRepository } from '../domain/OrderRepository.port';
 
 type PayOrderInput = {
@@ -17,10 +17,6 @@ export class PayOrderUseCase {
     const order = await this.orderRepository.findById(input.orderId);
     if (!order) {
       throw new NotFoundError('Order not found');
-    }
-
-    if (order.status === 'PAID') {
-      throw new ConflictError('Order already paid');
     }
 
     order.pay();
