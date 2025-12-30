@@ -1,5 +1,6 @@
 import { ConflictError } from 'shared-kernel';
 import { v7 as uuidv7 } from 'uuid';
+import { PasswordPolicy } from '../domain/PasswordPolicy';
 import { User } from '../domain/User';
 import type { UserRepository } from '../domain/UserRepository.port';
 import type { PasswordHasher } from './PasswordHasher.port';
@@ -22,6 +23,8 @@ export class SignupUseCase {
     if (existing) {
       throw new ConflictError('User already exists');
     }
+
+    PasswordPolicy.validate(input.passwordPlain);
 
     const passwordHash = await this.passwordHasher.hash(input.passwordPlain);
 
