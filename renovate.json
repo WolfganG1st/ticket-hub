@@ -8,6 +8,9 @@
     "group:allNonMajor"
   ],
   "rangeStrategy": "bump",
+  "rebaseWhen": "auto",
+  "automerge": true,
+  "platformAutomerge": true,
   "enabledManagers": [
     "npm"
   ],
@@ -43,16 +46,11 @@
     },
     {
       "matchUpdateTypes": [
-        "patch"
+        "patch",
+        "minor"
       ],
       "automerge": true,
-      "automergeType": "pr",
-      "matchPackageNames": [
-        "/^@types//",
-        "/^pino/",
-        "/^drizzle/",
-        "/^zod/"
-      ]
+      "automergeType": "pr"
     },
     {
       "matchFileNames": [
@@ -111,8 +109,13 @@
       "matchUpdateTypes": [
         "major"
       ],
+      "automerge": false,
       "prPriority": -1,
-      "minimumReleaseAge": "7 days"
+      "minimumReleaseAge": "7 days",
+      "labels": [
+        "dependencies",
+        "major"
+      ]
     },
     {
       "matchDatasources": [
