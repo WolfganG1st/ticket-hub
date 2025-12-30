@@ -1,5 +1,4 @@
-import { ValidationError } from 'shared-kernel';
-import { InsufficientStockError } from './errors/InsufficientStockError';
+import { applyReservation } from './ticket-type-rules';
 
 export class Event {
   constructor(
@@ -26,14 +25,6 @@ export class TicketType {
   ) {}
 
   public reserve(quantity: number): void {
-    if (quantity <= 0) {
-      throw new ValidationError('Quantity must be greater than 0');
-    }
-
-    if (this.remainingQuantity < quantity) {
-      throw new InsufficientStockError(quantity, this.remainingQuantity);
-    }
-
-    this.remainingQuantity -= quantity;
+    this.remainingQuantity = applyReservation(this.remainingQuantity, quantity);
   }
 }

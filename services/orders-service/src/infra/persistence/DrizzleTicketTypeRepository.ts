@@ -1,5 +1,6 @@
-import { eq } from 'drizzle-orm';
+import { and, eq, gte, sql } from 'drizzle-orm';
 import { TicketType } from '../../modules/events/domain/Event';
+import { InsufficientStockError } from '../../modules/events/domain/errors/InsufficientStockError';
 import type { TicketTypeRepository } from '../../modules/events/domain/TicketTypeRepository.port';
 import type { Db } from './db';
 import { ticketTypeRowSchema, ticketTypes } from './schema';
@@ -73,5 +74,32 @@ export class DrizzleTicketTypeRepository implements TicketTypeRepository {
           remainingQuantity: ticketType.remainingQuantity,
         },
       });
+  }
+
+  public async reserveAtomically(id: string, quantity: number): Promise<TicketType> {
+    const result = await this.database
+      .update(ticketTypes)
+      .set({
+        remainingQuantity: sql`${ticketTypes.remainingQuantity} - ${quantity}`,
+      })
+      .where(and(eq(ticketTypes.id, id), gte(ticketTypes.remainingQuantity, quantity)))
+      .returning();
+
+    if (result.length !== 1) {
+      throw new InsufficientStockError(quantity, 0);
+    }
+
+    const row = result[0];
+    const parsed = ticketTypeRowSchema.parse(row);
+
+    return new TicketType(
+      parsed.id,
+      parsed.eventId,
+      parsed.name,
+      parsed.priceInCents,
+      parsed.totalQuantity,
+      parsed.remainingQuantity,
+      parsed.createdAt,
+    );
   }
 }

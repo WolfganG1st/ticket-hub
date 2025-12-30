@@ -9,7 +9,7 @@ import {
 import { v7 as uuidv7 } from 'uuid';
 import type { AccountsClient } from '../../../infra/accounts/AccountsClient.port';
 import type { DistributedLock } from '../../../infra/redis/DistributedLock';
-import type { Event, TicketType } from '../../events/domain/Event';
+import type { Event } from '../../events/domain/Event';
 import type { EventRepository } from '../../events/domain/EventRepository.port';
 import type { TicketTypeRepository } from '../../events/domain/TicketTypeRepository.port';
 import { Order } from '../../orders/domain/Order';
@@ -65,9 +65,7 @@ export class CreateOrderUseCase {
 
       const event = await this.checkEvent(input.eventId);
 
-      const ticketType = await this.checkTicketType(input.ticketTypeId, input.eventId);
-
-      ticketType.reserve(input.quantity);
+      const ticketType = await this.ticketTypeRepository.reserveAtomically(input.ticketTypeId, input.quantity);
 
       const totalPriceInCents = this.calculateTotalPriceInCents(ticketType.priceInCents, input.quantity);
 
@@ -78,14 +76,13 @@ export class CreateOrderUseCase {
         orderId,
         user.id,
         event.id,
-        ticketType.id,
+        input.ticketTypeId,
         input.quantity,
         'PENDING',
         totalPriceInCents,
         now,
       );
 
-      await this.ticketTypeRepository.save(ticketType);
       await this.orderRepository.save(order, input.idempotencyKey);
 
       const orderCreatedEvent = orderCreatedEventSchema.parse({
@@ -130,19 +127,6 @@ export class CreateOrderUseCase {
     }
 
     return user;
-  }
-
-  private async checkTicketType(ticketTypeId: string, eventId: string): Promise<TicketType> {
-    const ticketType = await this.ticketTypeRepository.findById(ticketTypeId);
-    if (!ticketType) {
-      throw new NotFoundError('Ticket type not found');
-    }
-
-    if (ticketType.eventId !== eventId) {
-      throw new ConflictError('Ticket type does not belong to the event');
-    }
-
-    return ticketType;
   }
 
   private calculateTotalPriceInCents(priceInCents: number, quantity: number): number {
