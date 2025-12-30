@@ -60,7 +60,7 @@ export function mapErrorToHttpStatus(error: unknown): HttpErrorResponse {
       body: {
         error: 'ValidationError',
         message: 'Validation failed',
-        details: error.cause,
+        details: error.issues,
       },
     };
   }
