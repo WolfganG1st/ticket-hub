@@ -4,6 +4,7 @@ import { CreateEventUseCase } from '../../modules/events/application/CreateEvent
 import { GetEventByIdUseCase } from '../../modules/events/application/GetEventByIdUseCase';
 import { ListEventsUseCase } from '../../modules/events/application/ListEventsUseCase';
 import { CreateOrderUseCase } from '../../modules/orders/application/CreateOrderUseCase';
+import { GetOrderByIdUseCase } from '../../modules/orders/application/GetOrderByIdUseCase';
 import { PayOrderUseCase } from '../../modules/orders/application/PayOrderUseCase';
 import type { AccountsClient } from '../accounts/AccountsClient.port';
 import { DrizzleEventRepository } from '../persistence/DrizzleEventRepository';
@@ -39,6 +40,7 @@ export function buildOrderRouter(
     lock,
     outboxRepository,
   );
+  const getOrderByIdUseCase = new GetOrderByIdUseCase(orderRepository);
   const payOrderUseCase = new PayOrderUseCase(orderRepository);
 
   const controller = new OrdersHttpController(
@@ -46,6 +48,7 @@ export function buildOrderRouter(
     listEventsUseCase,
     getEventByIdUseCase,
     createOrderUseCase,
+    getOrderByIdUseCase,
     payOrderUseCase,
   );
 
@@ -54,6 +57,7 @@ export function buildOrderRouter(
   router.get('/events/:id', controller.getEventById);
 
   router.post('/orders', controller.createOrder);
+  router.get('/orders/:id', controller.getOrderById);
   router.post('/orders/:id/pay', controller.payOrder);
 
   return router;
