@@ -1,3 +1,4 @@
+import { ValidationError } from 'shared-kernel';
 import { applyReservation } from './ticket-type-rules';
 
 export class Event {
@@ -10,7 +11,11 @@ export class Event {
     public startsAt: Date,
     public endsAt: Date,
     public readonly createdAt: Date,
-  ) {}
+  ) {
+    if (endsAt < startsAt) {
+      throw new ValidationError('endsAt must be after startsAt');
+    }
+  }
 }
 
 export class TicketType {
