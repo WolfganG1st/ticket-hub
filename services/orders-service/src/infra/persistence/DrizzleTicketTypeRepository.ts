@@ -1,4 +1,5 @@
 import { and, eq, gte, sql } from 'drizzle-orm';
+import { NotFoundError } from 'shared-kernel';
 import { TicketType } from '../../modules/events/domain/Event';
 import { InsufficientStockError } from '../../modules/events/domain/errors/InsufficientStockError';
 import type { TicketTypeRepository } from '../../modules/events/domain/TicketTypeRepository.port';
@@ -86,7 +87,11 @@ export class DrizzleTicketTypeRepository implements TicketTypeRepository {
       .returning();
 
     if (result.length !== 1) {
-      throw new InsufficientStockError(quantity, 0);
+      const existing = await this.findById(id);
+      if (!existing) {
+        throw new NotFoundError('Ticket type not found');
+      }
+      throw new InsufficientStockError(quantity, existing.remainingQuantity);
     }
 
     const row = result[0];
