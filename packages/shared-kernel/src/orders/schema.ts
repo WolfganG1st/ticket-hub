@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const createEventRequestSchema = z.object({
-  organizerId: z.string().min(1),
+  organizerId: z.string().uuid(),
   title: z.string().min(1),
   description: z.string().nullish(),
   venue: z.string().min(1),
@@ -21,9 +21,9 @@ export const createEventRequestSchema = z.object({
 export type CreateEventRequest = z.infer<typeof createEventRequestSchema>;
 
 export const createOrderRequestSchema = z.object({
-  customerId: z.string().min(1),
-  eventId: z.string().min(1),
-  ticketTypeId: z.string().min(1),
+  customerId: z.uuid(),
+  eventId: z.uuid(),
+  ticketTypeId: z.uuid(),
   quantity: z.number().int().positive(),
 });
 

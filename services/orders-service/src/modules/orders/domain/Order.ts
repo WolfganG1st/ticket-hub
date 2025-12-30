@@ -1,3 +1,5 @@
+import { ConflictError } from 'shared-kernel';
+
 export type OrderStatus = 'PENDING' | 'PAID' | 'CANCELLED';
 
 export class Order {
@@ -14,7 +16,7 @@ export class Order {
 
   public pay(): void {
     if (this.status !== 'PENDING') {
-      throw new Error('Only pending orders can be paid');
+      throw new ConflictError(`Order cannot be paid in status ${this.status}`);
     }
 
     this._status = 'PAID';
