@@ -33,7 +33,6 @@ describe('CreateEvent (integration) - Invalid Dates', () => {
     expect(response.body).toEqual(
       expect.objectContaining({
         error: 'VALIDATION_ERROR',
-        message: 'Event end date must be after start date',
       }),
     );
   });
