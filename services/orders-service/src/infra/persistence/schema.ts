@@ -20,11 +20,11 @@ export const eventRowSchema = createSelectSchema(events);
 export const newEventRowSchema = createInsertSchema(events, {
   organizerId: z.string(),
   title: z.string(),
-  description: z.string().optional(),
+  description: z.string().nullish(),
   venue: z.string(),
   startsAt: z.date(),
   endsAt: z.date(),
-  idempotencyKey: z.string().optional(),
+  idempotencyKey: z.string().nullish(),
 });
 
 export type EventRow = z.infer<typeof eventRowSchema>;
@@ -77,7 +77,7 @@ export const newOrderRowSchema = createInsertSchema(orders, {
   quantity: z.number(),
   status: () => orderStatusSchema,
   totalPriceInCents: z.number(),
-  idempotencyKey: z.string().optional(),
+  idempotencyKey: z.string().nullish(),
 });
 
 export type OrderRow = z.infer<typeof orderRowSchema>;
