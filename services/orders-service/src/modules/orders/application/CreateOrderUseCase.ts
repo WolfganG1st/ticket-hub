@@ -67,6 +67,10 @@ export class CreateOrderUseCase {
 
       const ticketType = await this.ticketTypeRepository.reserveAtomically(input.ticketTypeId, input.quantity);
 
+      if (ticketType.eventId !== input.eventId) {
+        throw new ConflictError('Ticket type does not belong to the event');
+      }
+
       const totalPriceInCents = this.calculateTotalPriceInCents(ticketType.priceInCents, input.quantity);
 
       const orderId = uuidv7();
