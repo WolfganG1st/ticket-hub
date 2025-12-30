@@ -12,6 +12,7 @@ export const events = pgTable('events', {
   startsAt: timestamp('starts_at').notNull(),
   endsAt: timestamp('ends_at').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
+  idempotencyKey: varchar('idempotency_key', { length: 100 }).unique(),
 });
 
 export const eventRowSchema = createSelectSchema(events);
@@ -23,6 +24,7 @@ export const newEventRowSchema = createInsertSchema(events, {
   venue: z.string(),
   startsAt: z.date(),
   endsAt: z.date(),
+  idempotencyKey: z.string().optional(),
 });
 
 export type EventRow = z.infer<typeof eventRowSchema>;
@@ -81,7 +83,7 @@ export const newOrderRowSchema = createInsertSchema(orders, {
 export type OrderRow = z.infer<typeof orderRowSchema>;
 export type NewOrderRow = z.infer<typeof newOrderRowSchema>;
 
-const outboxStatus = pgEnum('order_outbox_status', ['PENDING', 'SENT', 'FAILED']);
+export const outboxStatus = pgEnum('order_outbox_status', ['PENDING', 'SENT', 'FAILED']);
 
 export const orderOutbox = pgTable('order_outbox', {
   id: varchar('id', { length: 36 }).primaryKey(),

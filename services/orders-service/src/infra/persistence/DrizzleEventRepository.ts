@@ -2,7 +2,7 @@ import { eq } from 'drizzle-orm';
 import { Event } from '../../modules/events/domain/Event';
 import type { EventRepository } from '../../modules/events/domain/EventRepository.port';
 import type { Db } from './db';
-import { eventRowSchema, events } from './schema';
+import { eventRowSchema, events, newEventRowSchema } from './schema';
 
 export class DrizzleEventRepository implements EventRepository {
   constructor(private readonly database: Db) {}
@@ -52,6 +52,29 @@ export class DrizzleEventRepository implements EventRepository {
     );
   }
 
+  public async findByIdempotencyKey(key: string): Promise<Event | null> {
+    const row = await this.database.query.events.findFirst({
+      where: eq(events.idempotencyKey, key),
+    });
+
+    if (!row) {
+      return null;
+    }
+
+    const parsed = eventRowSchema.parse(row);
+
+    return new Event(
+      parsed.id,
+      parsed.organizerId,
+      parsed.title,
+      parsed.description,
+      parsed.venue,
+      parsed.startsAt,
+      parsed.endsAt,
+      parsed.createdAt,
+    );
+  }
+
   public async findAll(): Promise<Event[]> {
     const rows = await this.database.query.events.findMany();
 
@@ -72,8 +95,8 @@ export class DrizzleEventRepository implements EventRepository {
     );
   }
 
-  public async save(event: Event): Promise<void> {
-    const payload = eventRowSchema.parse({
+  public async save(event: Event, idempotencyKey?: string | null): Promise<void> {
+    const payload = newEventRowSchema.parse({
       id: event.id,
       organizerId: event.organizerId,
       title: event.title,
@@ -82,6 +105,7 @@ export class DrizzleEventRepository implements EventRepository {
       startsAt: event.startsAt,
       endsAt: event.endsAt,
       createdAt: event.createdAt,
+      idempotencyKey,
     });
 
     await this.database

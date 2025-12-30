@@ -11,6 +11,7 @@ type TicketTypeInput = {
 };
 
 type CreateEventInput = {
+  idempotencyKey: string | null;
   organizerId: string;
   title: string;
   description?: string | null;
@@ -35,6 +36,15 @@ export class CreateEventUseCase {
       throw new ValidationError('Event end date must be after start date');
     }
 
+    if (input.idempotencyKey) {
+      const existing = await this.eventRepository.findByIdempotencyKey(input.idempotencyKey);
+      if (existing) {
+        return {
+          eventId: existing.id,
+        };
+      }
+    }
+
     const eventId = uuidv7();
     const now = new Date();
 
@@ -49,7 +59,7 @@ export class CreateEventUseCase {
       now,
     );
 
-    await this.eventRepository.save(event);
+    await this.eventRepository.save(event, input.idempotencyKey);
 
     for (const ticket of input.ticketTypes) {
       const ticketType = new TicketType(
