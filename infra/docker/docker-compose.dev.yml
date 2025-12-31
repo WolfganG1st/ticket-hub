@@ -10,6 +10,8 @@ services:
       - "6379:6379"
     volumes:
       - redis-data:/data
+    restart:
+      unless-stopped
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
@@ -24,6 +26,8 @@ services:
       - "5540:5540"
     volumes:
       - redisinsight-data:/data
+    restart:
+      unless-stopped
     depends_on:
       redis:
         condition: service_healthy
@@ -82,6 +86,8 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-accounts}
     ports:
       - "5433:5432"
+    restart:
+      unless-stopped
     volumes:
       - accounts-db-data:/var/lib/postgresql/data
       - ../postgres/accounts-init:/docker-entrypoint-initdb.d
@@ -162,6 +168,8 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     ports:
       - "9092:9092"
+    restart:
+      unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "/opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list"]
       interval: 10s
@@ -179,6 +187,8 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-orders}
     ports:
       - "5434:5432"
+    restart:
+      unless-stopped
     volumes:
       - orders-db-data:/var/lib/postgresql/data
       - ../postgres/orders-init:/docker-entrypoint-initdb.d
