@@ -18,6 +18,7 @@
     "test:gateway": "pnpm --filter graphql-gateway test",
     "db:studio": "drizzle-kit studio",
     "db:test:push": "pnpm --filter accounts-service db:test:push && pnpm --filter orders-service db:test:push",
+    "db:ci:push": "pnpm --filter accounts-service db:ci:push && pnpm --filter orders-service db:ci:push",
     "db:studio:accounts": "pnpm --filter accounts-service db:studio",
     "db:studio:orders": "pnpm --filter orders-service db:studio",
     "db:push:accounts": "pnpm --filter accounts-service db:push",

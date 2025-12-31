@@ -183,6 +183,9 @@ jobs:
           key: build-${{ github.sha }}
           fail-on-cache-miss: true
 
+      - name: Push database schemas
+        run: pnpm db:ci:push
+
       - name: Run all tests
         run: pnpm test
         env:
