@@ -9,13 +9,17 @@ declare global {
 }
 
 beforeAll(async () => {
-  globalThis.__gatewayTestContext = await createGatewayTestContext();
+  global.__gatewayTestContext = await createGatewayTestContext();
 });
 
 beforeEach(async () => {
-  await globalThis.__gatewayTestContext.reset();
+  if (global.__gatewayTestContext) {
+    await global.__gatewayTestContext.reset();
+  }
 });
 
 afterAll(async () => {
-  await globalThis.__gatewayTestContext.close();
+  if (global.__gatewayTestContext) {
+    await global.__gatewayTestContext.close();
+  }
 });
