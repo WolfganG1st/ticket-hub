@@ -7,6 +7,7 @@ import cors from 'cors';
 import express, { type Express } from 'express';
 import { logger, loggerMiddleware } from 'shared-kernel';
 import type { GraphQlContext } from './context';
+import { formatError } from './infra/error-mapping';
 import { createRedisClient, RedisCache } from './infra/redis-cache';
 import { resolvers } from './resolvers';
 import { typeDefs } from './schema';
@@ -23,6 +24,7 @@ export async function makeApp(env: GatewayEnv): Promise<Express> {
   const server = new ApolloServer<GraphQlContext>({
     typeDefs,
     resolvers,
+    formatError,
   });
 
   await server.start();
