@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { expect, test } from 'vitest';
-import { getAccountsTestContext } from '../_support/setup';
+import { getAccountsTestContext } from '../../_support/setup';
 
 test('signup + login + me', async () => {
   const { app } = getAccountsTestContext();
