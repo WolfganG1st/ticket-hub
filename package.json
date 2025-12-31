@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "pnpm -r run build",
-    "typecheck": "pnpm -r run tsc --noEmit",
+    "typecheck": "pnpm -r exec tsc --noEmit",
     "lint": "biome check --write --unsafe",
     "test": "pnpm -r run test",
     "deps:outdated": "pnpm outdated -r",
