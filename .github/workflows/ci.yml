@@ -160,9 +160,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build packages (required for monorepo imports)
+        run: pnpm build
+
       - name: Run all tests
         run: pnpm test
         env:
+          SERVICE_NAME: ci-test
           NODE_ENV: test
           ACCOUNTS_DATABASE_URL: postgres://postgres:postgres@localhost:5433/accounts_test
           ACCOUNTS_JWT_SECRET: test_secret_key_for_ci
