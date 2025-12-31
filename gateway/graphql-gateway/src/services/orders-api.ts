@@ -1,3 +1,5 @@
+import { ConflictError, NotFoundError, UnexpectedError } from 'shared-kernel';
+
 export type OrdersEvent = {
   id: string;
   title: string;
@@ -69,7 +71,7 @@ export class OrdersApi {
 
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error(`Order /events failed with status ${response.status}`);
+      throw new UnexpectedError(`Order /events failed with status ${response.status}`);
     }
     const data = (await response.json()) as OrdersEvent[];
     return data;
@@ -83,7 +85,7 @@ export class OrdersApi {
     }
 
     if (!response.ok) {
-      throw new Error(`Orders /events/${id} failed with status ${response.status}`);
+      throw new UnexpectedError(`Orders /events/${id} failed with status ${response.status}`);
     }
 
     const data = (await response.json()) as OrdersEvent;
@@ -99,8 +101,13 @@ export class OrdersApi {
       body: JSON.stringify(input),
     });
 
+    if (response.status === 409) {
+      const errorData = (await response.json().catch(() => ({}))) as { message?: string };
+      throw new ConflictError(errorData.message || 'Conflict creating event');
+    }
+
     if (!response.ok) {
-      throw new Error(`Orders POST /events failed with status ${response.status}`);
+      throw new UnexpectedError(`Orders POST /events failed with status ${response.status}`);
     }
 
     const data = (await response.json()) as CreateEventResponse;
@@ -123,8 +130,17 @@ export class OrdersApi {
       body: JSON.stringify(body),
     });
 
+    if (response.status === 409) {
+      const errorData = (await response.json().catch(() => ({}))) as { message?: string };
+      throw new ConflictError(errorData.message || 'Conflict creating order');
+    }
+
+    if (response.status === 404) {
+      throw new NotFoundError('Event or ticket type not found');
+    }
+
     if (!response.ok) {
-      throw new Error(`Orders POST /orders failed with status ${response.status}`);
+      throw new UnexpectedError(`Orders POST /orders failed with status ${response.status}`);
     }
 
     const data = (await response.json()) as CreateOrderResponse;
@@ -136,8 +152,12 @@ export class OrdersApi {
       method: 'POST',
     });
 
+    if (response.status === 404) {
+      throw new NotFoundError('Order not found');
+    }
+
     if (!response.ok) {
-      throw new Error(`Orders POST /orders/${id}/pay failed with status ${response.status}`);
+      throw new UnexpectedError(`Orders POST /orders/${id}/pay failed with status ${response.status}`);
     }
 
     const data = (await response.json()) as PayOrderResponse;
@@ -151,7 +171,7 @@ export class OrdersApi {
     const response = await fetch(url);
 
     if (!response.ok) {
-      throw new Error(`Orders GET /orders failed with status ${response.status}`);
+      throw new UnexpectedError(`Orders GET /orders failed with status ${response.status}`);
     }
 
     const data = (await response.json()) as OrdersOrder[];

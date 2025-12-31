@@ -1,3 +1,5 @@
+import { NotFoundError, UnauthorizedError, UnexpectedError } from 'shared-kernel';
+
 export type AccountUser = {
   id: string;
   name: string;
@@ -20,11 +22,15 @@ export class AccountsApi {
     });
 
     if (response.status === 401) {
-      return null;
+      throw new UnauthorizedError('Invalid or expired token');
+    }
+
+    if (response.status === 404) {
+      throw new NotFoundError('User not found');
     }
 
     if (!response.ok) {
-      throw new Error(`Accounts /me failed with status ${response.status}`);
+      throw new UnexpectedError(`Accounts /me failed with status ${response.status}`);
     }
 
     const data = (await response.json()) as AccountUser;
