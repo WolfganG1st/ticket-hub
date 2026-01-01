@@ -40,7 +40,7 @@
       "sha3": "npm:js-sha3@^0.9.3",
       "scrypt": "npm:scrypt-js@^3.0.1",
       "keccak": "npm:js-sha3@^0.9.3",
-      "secp256k1": "npm:@noble/secp256k1@^1.7.1"
+      "secp256k1": "npm:@noble/secp256k1@^3.0.0"
     }
   }
 }
