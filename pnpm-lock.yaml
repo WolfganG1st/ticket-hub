@@ -89,7 +89,7 @@ importers:
     dependencies:
       zod:
         specifier: ^4.1.13
-        version: 4.3.4
+        version: 4.3.5
 
   packages/shared-kernel:
     dependencies:
@@ -104,7 +104,7 @@ importers:
         version: 13.1.3
       zod:
         specifier: ^4.1.13
-        version: 4.3.4
+        version: 4.3.5
     devDependencies:
       '@ticket-hub/testkit':
         specifier: workspace:*
@@ -154,7 +154,7 @@ importers:
         version: 0.45.1(@types/pg@8.16.0)(pg@8.16.3)
       drizzle-zod:
         specifier: ^0.8.3
-        version: 0.8.3(drizzle-orm@0.45.1(@types/pg@8.16.0)(pg@8.16.3))(zod@4.3.4)
+        version: 0.8.3(drizzle-orm@0.45.1(@types/pg@8.16.0)(pg@8.16.3))(zod@4.3.5)
       express:
         specifier: ^5.1.0
         version: 5.2.1
@@ -181,7 +181,7 @@ importers:
         version: 13.0.0
       zod:
         specifier: ^4.1.13
-        version: 4.3.4
+        version: 4.3.5
     devDependencies:
       '@ticket-hub/testkit':
         specifier: workspace:*
@@ -242,7 +242,7 @@ importers:
         version: 0.45.1(@types/pg@8.16.0)(pg@8.16.3)
       drizzle-zod:
         specifier: ^0.8.3
-        version: 0.8.3(drizzle-orm@0.45.1(@types/pg@8.16.0)(pg@8.16.3))(zod@4.3.4)
+        version: 0.8.3(drizzle-orm@0.45.1(@types/pg@8.16.0)(pg@8.16.3))(zod@4.3.5)
       express:
         specifier: ^5.1.0
         version: 5.2.1
@@ -275,7 +275,7 @@ importers:
         version: 4.0.16(@types/node@24.10.4)(tsx@4.21.0)
       zod:
         specifier: ^4.1.13
-        version: 4.3.4
+        version: 4.3.5
     devDependencies:
       '@ticket-hub/testkit':
         specifier: workspace:*
@@ -3900,8 +3900,8 @@ packages:
   yauzl@2.10.0:
     resolution: {integrity: sha512-p4a9I6X6nu6IhoGmBqAcbJy1mlC4j27vEPZX9F4L4/vZT3Lyq1VkFHw/V/PUcB9Buo+DG3iHkT0x3Qya58zc3g==}
 
-  zod@4.3.4:
-    resolution: {integrity: sha512-Zw/uYiiyF6pUT1qmKbZziChgNPRu+ZRneAsMUDU6IwmXdWt5JwcUfy2bvLOCUtz5UniaN/Zx5aFttZYbYc7O/A==}
+  zod@4.3.5:
+    resolution: {integrity: sha512-k7Nwx6vuWx1IJ9Bjuf4Zt1PEllcwe7cls3VNzm4CQ1/hgtFUK2bRNG3rvnpPUhFjmqJKAKtjV576KnUkHocg/g==}
 
 snapshots:
 
@@ -5563,10 +5563,10 @@ snapshots:
       '@types/pg': 8.16.0
       pg: 8.16.3
 
-  drizzle-zod@0.8.3(drizzle-orm@0.45.1(@types/pg@8.16.0)(pg@8.16.3))(zod@4.3.4):
+  drizzle-zod@0.8.3(drizzle-orm@0.45.1(@types/pg@8.16.0)(pg@8.16.3))(zod@4.3.5):
     dependencies:
       drizzle-orm: 0.45.1(@types/pg@8.16.0)(pg@8.16.3)
-      zod: 4.3.4
+      zod: 4.3.5
 
   drizzle@1.4.0:
     dependencies:
@@ -8098,4 +8098,4 @@ snapshots:
       buffer-crc32: 0.2.13
       fd-slicer: 1.1.0
 
-  zod@4.3.4: {}
+  zod@4.3.5: {}
