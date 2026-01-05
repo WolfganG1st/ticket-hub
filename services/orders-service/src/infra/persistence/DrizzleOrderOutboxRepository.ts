@@ -69,7 +69,7 @@ export class DrizzleOrderOutboxRepository implements OrderOutboxRepository {
   public async markAsFailed(id: string, errorMessage?: string): Promise<void> {
     await this.database
       .update(orderOutbox)
-      .set({ status: 'FAILED', processedAt: new Date(), errorMessage: errorMessage ?? null })
+      .set({ status: 'FAILED', processedAt: new Date(), errorMessage })
       .where(and(eq(orderOutbox.id, id), eq(orderOutbox.status, 'PROCESSING')));
   }
 }
