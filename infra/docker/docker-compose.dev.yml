@@ -136,6 +136,7 @@ services:
       ORDERS_DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@orders-db:5432/${POSTGRES_DB:-orders}
       REDIS_URL: redis://redis:6379
       ACCOUNTS_GRPC_URL: accounts-service-grpc:50051
+      ORDERS_KAFKA_TOPIC: orders.events
       ORDERS_KAFKA_BROKERS: kafka:9092
       ORDERS_OUTBOX_BATCH_SIZE: 50
       ORDERS_OUTBOX_POLL_INTERVAL_MS: 1000

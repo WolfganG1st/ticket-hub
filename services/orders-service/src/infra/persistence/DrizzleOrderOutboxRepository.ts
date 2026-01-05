@@ -1,4 +1,4 @@
-import { and, eq } from 'drizzle-orm';
+import { and, eq, inArray } from 'drizzle-orm';
 import { v7 as uuidv7 } from 'uuid';
 import type {
   OrderOutboxPayload,
@@ -23,13 +23,29 @@ export class DrizzleOrderOutboxRepository implements OrderOutboxRepository {
     await this.database.insert(orderOutbox).values(row);
   }
 
-  public async findPending(batchSize: number) {
-    const rows = await this.database
-      .select()
+  public async claimPending(batchSize: number) {
+    // select ids of pending outbox entries
+    const idsSubquery = await this.database
+      .select({ id: orderOutbox.id })
       .from(orderOutbox)
       .where(eq(orderOutbox.status, 'PENDING'))
       .orderBy(orderOutbox.createdAt)
       .limit(batchSize);
+
+    // update status to processing
+    const rows = await this.database
+      .update(orderOutbox)
+      .set({ status: 'PROCESSING' })
+      .where(
+        and(
+          eq(orderOutbox.status, 'PENDING'),
+          inArray(
+            orderOutbox.id,
+            idsSubquery.map((id) => id.id),
+          ),
+        ),
+      )
+      .returning();
 
     return rows.map((row) => {
       const parsed = orderOutboxRowSchema.parse(row);
@@ -47,13 +63,13 @@ export class DrizzleOrderOutboxRepository implements OrderOutboxRepository {
     await this.database
       .update(orderOutbox)
       .set({ status: 'SENT', processedAt: new Date() })
-      .where(and(eq(orderOutbox.id, id), eq(orderOutbox.status, 'PENDING')));
+      .where(and(eq(orderOutbox.id, id), eq(orderOutbox.status, 'PROCESSING')));
   }
 
   public async markAsFailed(id: string, errorMessage?: string): Promise<void> {
     await this.database
       .update(orderOutbox)
       .set({ status: 'FAILED', processedAt: new Date(), errorMessage: errorMessage ?? null })
-      .where(eq(orderOutbox.id, id));
+      .where(and(eq(orderOutbox.id, id), eq(orderOutbox.status, 'PROCESSING')));
   }
 }

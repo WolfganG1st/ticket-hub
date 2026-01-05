@@ -7,7 +7,7 @@ export type OrderOutboxPayload = OrderCreatedEvent | OrderPaidEvent;
 export interface OrderOutboxRepository {
   enqueue(aggregateId: string, type: OrderOutboxType, payload: OrderOutboxPayload): Promise<void>;
 
-  findPending(batchSize: number): Promise<
+  claimPending(batchSize: number): Promise<
     {
       id: string;
       aggregateId: string;

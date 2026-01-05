@@ -24,7 +24,7 @@ export type ProcessOutboxBatchInput = {
 export const processOutboxBatch = async (input: ProcessOutboxBatchInput): Promise<void> => {
   const { outboxRepository, producer, topic, batchSize } = input;
 
-  const pendingEntries = await outboxRepository.findPending(batchSize);
+  const pendingEntries = await outboxRepository.claimPending(batchSize);
 
   if (pendingEntries.length === 0) {
     return;

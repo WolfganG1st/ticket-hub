@@ -1,0 +1,1 @@
+ALTER TYPE "public"."order_outbox_status" ADD VALUE 'PROCESSING' BEFORE 'SENT';

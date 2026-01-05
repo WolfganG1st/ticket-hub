@@ -83,7 +83,7 @@ export const newOrderRowSchema = createInsertSchema(orders, {
 export type OrderRow = z.infer<typeof orderRowSchema>;
 export type NewOrderRow = z.infer<typeof newOrderRowSchema>;
 
-export const outboxStatus = pgEnum('order_outbox_status', ['PENDING', 'SENT', 'FAILED']);
+export const outboxStatus = pgEnum('order_outbox_status', ['PENDING', 'PROCESSING', 'SENT', 'FAILED']);
 
 export const orderOutbox = pgTable('order_outbox', {
   id: varchar('id', { length: 36 }).primaryKey(),
@@ -99,9 +99,12 @@ export const orderOutbox = pgTable('order_outbox', {
 export const orderOutboxRowSchema = createSelectSchema(orderOutbox);
 
 export const newOrderOutboxRowSchema = createInsertSchema(orderOutbox, {
+  id: z.uuidv7(),
   aggregateId: z.uuidv7(),
   type: z.string(),
   payload: z.unknown(),
+  status: z.literal('PENDING'),
+  errorMessage: z.string().nullish(),
 });
 
 export type OrderOutboxRow = z.infer<typeof orderOutboxRowSchema>;
