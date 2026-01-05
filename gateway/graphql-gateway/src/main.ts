@@ -31,6 +31,10 @@ export async function makeApp(env: GatewayEnv): Promise<Express> {
 
   const app = express();
 
+  app.get('/health', (_req, res) => {
+    res.status(200).json({ status: 'OK' });
+  });
+
   app.use(
     '/graphql',
     cors<cors.CorsRequest>(),

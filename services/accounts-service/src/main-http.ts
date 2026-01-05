@@ -9,6 +9,9 @@ export function makeApp(db: Db, env: AccountsEnv): Express {
   const app = express();
   app.use(express.json());
   app.use(loggerMiddleware);
+  app.get('/health', (_req, res) => {
+    res.status(200).json({ status: 'OK' });
+  });
 
   app.use('/api/v1', buildAccountRouter(db, env));
 

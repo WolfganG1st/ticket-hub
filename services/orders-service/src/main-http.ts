@@ -28,6 +28,9 @@ async function bootstrapHttp(): Promise<void> {
   const app = express();
   app.use(express.json());
   app.use(loggerMiddleware);
+  app.get('/health', (_req, res) => {
+    res.status(200).json({ status: 'OK' });
+  });
 
   app.use('/api/v1', buildOrderRouter(db, env, accountsClient, lock));
 
