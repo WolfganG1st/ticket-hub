@@ -12,7 +12,7 @@ describe('DrizzleOrderOutboxRepository (integration) - Mark As Sent', () => {
     const aggregateId = uuidv7();
 
     await repository.enqueue(aggregateId, 'ORDER_CREATED', {} as any);
-    const [pending] = await repository.findPending(1);
+    const [pending] = await repository.claimPending(1);
 
     await repository.markAsSent(pending.id);
 
@@ -27,7 +27,7 @@ describe('DrizzleOrderOutboxRepository (integration) - Mark As Sent', () => {
     const aggregateId = uuidv7();
 
     await repository.enqueue(aggregateId, 'ORDER_CREATED', {} as any);
-    const [pending] = await repository.findPending(1);
+    const [pending] = await repository.claimPending(1);
 
     await repository.markAsSent(pending.id);
     const firstProcessedAt = (await db.select().from(orderOutbox).where(eq(orderOutbox.id, pending.id)))[0].processedAt;
