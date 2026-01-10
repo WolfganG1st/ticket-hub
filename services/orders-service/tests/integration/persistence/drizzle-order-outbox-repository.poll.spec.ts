@@ -15,7 +15,7 @@ describe('DrizzleOrderOutboxRepository (integration) - Poll', () => {
     await repository.enqueue(aggregateId, 'ORDER_CREATED', { i: 2 } as any);
     await repository.enqueue(aggregateId, 'ORDER_CREATED', { i: 3 } as any);
 
-    const pending = await repository.findPending(2);
+    const pending = await repository.claimPending(2);
     expect(pending).toHaveLength(2);
     expect((pending[0].payload as any).i).toBe(1);
     expect((pending[1].payload as any).i).toBe(2);
@@ -44,7 +44,7 @@ describe('DrizzleOrderOutboxRepository (integration) - Poll', () => {
       status: 'FAILED',
     });
 
-    const pending = await repository.findPending(10);
+    const pending = await repository.claimPending(10);
     expect(pending).toHaveLength(1);
     expect(pending[0].type).toBe('ORDER_CREATED');
   });

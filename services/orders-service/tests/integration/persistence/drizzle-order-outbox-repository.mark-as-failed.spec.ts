@@ -12,7 +12,7 @@ describe('DrizzleOrderOutboxRepository (integration) - Mark As Failed', () => {
     const aggregateId = uuidv7();
 
     await repository.enqueue(aggregateId, 'ORDER_CREATED', {} as any);
-    const [pending] = await repository.findPending(1);
+    const [pending] = await repository.claimPending(1);
 
     const errorMsg = 'Something went wrong';
     await repository.markAsFailed(pending.id, errorMsg);
@@ -30,7 +30,7 @@ describe('DrizzleOrderOutboxRepository (integration) - Mark As Failed', () => {
     const payload = { data: 'important' };
 
     await repository.enqueue(aggregateId, 'ORDER_CREATED', payload as any);
-    const [pending] = await repository.findPending(1);
+    const [pending] = await repository.claimPending(1);
 
     await repository.markAsFailed(pending.id, 'Error');
 
