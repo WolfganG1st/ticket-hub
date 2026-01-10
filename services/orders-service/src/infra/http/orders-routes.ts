@@ -41,7 +41,7 @@ export function buildOrderRouter(
     outboxRepository,
   );
   const getOrderByIdUseCase = new GetOrderByIdUseCase(orderRepository);
-  const payOrderUseCase = new PayOrderUseCase(orderRepository);
+  const payOrderUseCase = new PayOrderUseCase(orderRepository, outboxRepository);
 
   const controller = new OrdersHttpController(
     createEventUseCase,

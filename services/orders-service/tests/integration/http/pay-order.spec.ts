@@ -2,7 +2,7 @@ import { eq } from 'drizzle-orm';
 import request from 'supertest';
 import { v7 as uuidv7 } from 'uuid';
 import { describe, expect, it } from 'vitest';
-import { orders } from '../../../src/infra/persistence/schema';
+import { orderOutbox, orders } from '../../../src/infra/persistence/schema';
 import { seedEventWithTicketType } from '../../_support/seed';
 import { getOrdersTestContext } from '../../_support/setup';
 
@@ -42,5 +42,19 @@ describe('PayOrder (integration)', () => {
         error: 'CONFLICT',
       }),
     );
+
+    // 4. Verify Outbox
+    const outboxRow = await db.query.orderOutbox.findFirst({
+      where: eq(orderOutbox.aggregateId, orderId),
+      orderBy: (outbox, { desc }) => [desc(outbox.createdAt)],
+    });
+
+    expect(outboxRow).not.toBeNull();
+    expect(outboxRow?.type).toBe('ORDER_PAID');
+    expect(outboxRow?.status).toBe('PENDING');
+    expect(outboxRow?.payload).toMatchObject({
+      eventName: 'OrderPaid',
+      orderId: orderId,
+    });
   });
 });
