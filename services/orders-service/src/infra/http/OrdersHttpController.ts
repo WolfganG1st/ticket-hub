@@ -18,7 +18,8 @@ export class OrdersHttpController {
   ) {}
 
   public createEvent = safeHttpHandler(async (req, res) => {
-    const idempotencyKeyHeader = req.header('x-idempotency-key') ?? null;
+    const headerValue = req.header('x-idempotency-key');
+    const idempotencyKeyHeader = Array.isArray(headerValue) ? headerValue[0] : (headerValue ?? null);
     const parsed = createEventRequestSchema.parse(req.body);
 
     const startsAt = new Date(parsed.startsAt);
@@ -53,7 +54,7 @@ export class OrdersHttpController {
   });
 
   public getEventById = safeHttpHandler(async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };
 
     const result = await this.getEventByIdUseCase.execute({ eventId: id });
 
@@ -61,7 +62,8 @@ export class OrdersHttpController {
   });
 
   public createOrder = safeHttpHandler(async (req, res) => {
-    const idempotencyKeyHeader = req.header('x-idempotency-key') ?? null;
+    const headerValue = req.header('x-idempotency-key');
+    const idempotencyKeyHeader = Array.isArray(headerValue) ? headerValue[0] : (headerValue ?? null);
     const parsed = createOrderRequestSchema.parse(req.body);
 
     const result = await this.createOrderUseCase.execute({
@@ -76,7 +78,7 @@ export class OrdersHttpController {
   });
 
   public getOrderById = safeHttpHandler(async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };
 
     const result = await this.getOrderByIdUseCase.execute({ orderId: id });
 
@@ -84,7 +86,7 @@ export class OrdersHttpController {
   });
 
   public payOrder = safeHttpHandler(async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };
 
     const result = await this.payOrderUseCase.execute({ orderId: id });
 
