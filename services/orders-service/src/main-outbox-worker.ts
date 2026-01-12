@@ -26,9 +26,9 @@ async function bootstrapOutboxWorker(): Promise<void> {
   const worker = startOrderOutboxWorker({
     outboxRepository,
     producer,
-    topic: env.ORDERS_KAFKA_TOPIC ?? '',
-    batchSize: env.ORDERS_OUTBOX_BATCH_SIZE ?? 50,
-    pollIntervalMs: env.ORDERS_OUTBOX_POLL_INTERVAL_MS ?? 1000,
+    topic: env.ORDERS_KAFKA_TOPIC,
+    batchSize: env.ORDERS_OUTBOX_BATCH_SIZE,
+    pollIntervalMs: env.ORDERS_OUTBOX_POLL_INTERVAL_MS,
   });
 
   const shutdown = async (signal: string): Promise<void> => {
