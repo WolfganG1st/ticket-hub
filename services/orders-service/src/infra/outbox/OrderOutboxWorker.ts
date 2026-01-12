@@ -94,7 +94,7 @@ export function startOrderOutboxWorker(input: StartOrderOutboxWorkerInput): Orde
       currentTimeout = null;
     }
 
-    if (loopPromise) {
+    if (await loopPromise) {
       await loopPromise;
     }
   };

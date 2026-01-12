@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.10/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.11/schema.json",
   "assist": {
     "actions": {
       "source": {
@@ -8,15 +8,7 @@
     }
   },
   "files": {
-    "includes": [
-      "**",
-      "!**/node_modules",
-      "!**/data",
-      "!**/build",
-      "!**/dist",
-      "!**/public",
-      "!**/coverage"
-    ]
+    "includes": ["**", "!**/node_modules", "!**/data", "!**/build", "!**/dist", "!**/public", "!**/coverage"]
   },
   "linter": {
     "enabled": true,
@@ -80,34 +72,20 @@
                 "selector": {
                   "kind": "typeMember"
                 },
-                "formats": [
-                  "PascalCase",
-                  "camelCase",
-                  "snake_case"
-                ]
+                "formats": ["PascalCase", "camelCase", "snake_case"]
               },
               {
                 "selector": {
                   "kind": "classProperty",
-                  "modifiers": [
-                    "readonly"
-                  ]
+                  "modifiers": ["readonly"]
                 },
-                "formats": [
-                  "PascalCase",
-                  "camelCase",
-                  "CONSTANT_CASE"
-                ]
+                "formats": ["PascalCase", "camelCase", "CONSTANT_CASE"]
               },
               {
                 "selector": {
                   "kind": "objectLiteralProperty"
                 },
-                "formats": [
-                  "camelCase",
-                  "snake_case",
-                  "CONSTANT_CASE"
-                ],
+                "formats": ["camelCase", "snake_case", "CONSTANT_CASE"],
                 "match": "\\$id|[a-z][a-zA-Z0-9]*|[a-z]+(_[a-z0-9]+)*|[A-Z0-9_]+"
               }
             ]
@@ -220,10 +198,7 @@
   },
   "overrides": [
     {
-      "includes": [
-        "**/*.spec.ts",
-        "**/*.model.ts"
-      ],
+      "includes": ["**/*.spec.ts", "**/*.model.ts"],
       "linter": {
         "rules": {
           "suspicious": {
@@ -239,34 +214,20 @@
                     "selector": {
                       "kind": "typeMember"
                     },
-                    "formats": [
-                      "PascalCase",
-                      "camelCase",
-                      "snake_case"
-                    ]
+                    "formats": ["PascalCase", "camelCase", "snake_case"]
                   },
                   {
                     "selector": {
                       "kind": "classProperty",
-                      "modifiers": [
-                        "readonly"
-                      ]
+                      "modifiers": ["readonly"]
                     },
-                    "formats": [
-                      "PascalCase",
-                      "camelCase",
-                      "CONSTANT_CASE"
-                    ]
+                    "formats": ["PascalCase", "camelCase", "CONSTANT_CASE"]
                   },
                   {
                     "selector": {
                       "kind": "objectLiteralProperty"
                     },
-                    "formats": [
-                      "camelCase",
-                      "snake_case",
-                      "PascalCase"
-                    ]
+                    "formats": ["camelCase", "snake_case", "PascalCase"]
                   }
                 ]
               }
@@ -276,11 +237,7 @@
       }
     },
     {
-      "includes": [
-        "src/schemas/*.schema.ts",
-        "src/validators/*.validator.ts",
-        "**/schema.ts"
-      ],
+      "includes": ["src/schemas/*.schema.ts", "src/validators/*.validator.ts", "**/schema.ts"],
       "linter": {
         "rules": {
           "nursery": {
@@ -290,11 +247,7 @@
       }
     },
     {
-      "includes": [
-        "tests/**/*.ts",
-        "**/*generated*/**",
-        "**/*generated*"
-      ],
+      "includes": ["tests/**/*.ts", "**/*generated*/**", "**/*generated*"],
       "linter": {
         "rules": {
           "suspicious": {
@@ -311,9 +264,7 @@
     "indentWidth": 2,
     "lineWidth": 120,
     "lineEnding": "lf",
-    "includes": [
-      "**"
-    ]
+    "includes": ["**"]
   },
   "javascript": {
     "parser": {

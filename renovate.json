@@ -11,135 +11,72 @@
   "rebaseWhen": "auto",
   "automerge": true,
   "platformAutomerge": true,
-  "enabledManagers": [
-    "npm"
-  ],
+  "enabledManagers": ["npm"],
   "npm": {
     "enabled": true
   },
   "packageRules": [
     {
-      "matchManagers": [
-        "npm"
-      ],
-      "matchFileNames": [
-        "services/**",
-        "gateway/**",
-        "packages/**"
-      ],
+      "matchManagers": ["npm"],
+      "matchFileNames": ["services/**", "gateway/**", "packages/**"],
       "groupName": "workspace dependencies",
       "groupSlug": "workspace-deps"
     },
     {
-      "matchManagers": [
-        "npm"
-      ],
-      "matchPackageNames": [
-        "zod",
-        "drizzle-orm",
-        "redis",
-        "pg",
-        "express"
-      ],
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["zod", "drizzle-orm", "redis", "pg", "express"],
       "groupName": "core backend deps",
       "groupSlug": "core-backend"
     },
     {
-      "matchUpdateTypes": [
-        "patch",
-        "minor"
-      ],
+      "matchUpdateTypes": ["patch", "minor"],
       "automerge": true,
       "automergeType": "pr"
     },
     {
-      "matchFileNames": [
-        "services/accounts-service/**"
-      ],
-      "addLabels": [
-        "service:accounts"
-      ]
+      "matchFileNames": ["services/accounts-service/**"],
+      "addLabels": ["service:accounts"]
     },
     {
-      "matchFileNames": [
-        "services/orders-service/**"
-      ],
-      "addLabels": [
-        "service:orders"
-      ]
+      "matchFileNames": ["services/orders-service/**"],
+      "addLabels": ["service:orders"]
     },
     {
-      "matchFileNames": [
-        "gateway/graphql-gateway/**"
-      ],
-      "addLabels": [
-        "gateway/graphql-gateway"
-      ]
+      "matchFileNames": ["gateway/graphql-gateway/**"],
+      "addLabels": ["gateway/graphql-gateway"]
     },
     {
       "groupName": "@types packages",
       "groupSlug": "types",
-      "matchPackageNames": [
-        "/^@types//"
-      ]
+      "matchPackageNames": ["/^@types//"]
     },
     {
       "groupName": "linting & formatting",
       "groupSlug": "linting",
-      "matchPackageNames": [
-        "/^eslint/",
-        "/^@typescript-eslint/",
-        "/^@biomejs//"
-      ]
+      "matchPackageNames": ["/^eslint/", "/^@typescript-eslint/", "/^@biomejs//"]
     },
     {
       "groupName": "testing libraries",
       "groupSlug": "testing",
-      "matchPackageNames": [
-        "/^jest/",
-        "/^vitest/",
-        "/^@types/jest/",
-        "/^@testing-library//"
-      ]
+      "matchPackageNames": ["/^jest/", "/^vitest/", "/^@types/jest/", "/^@testing-library//"]
     },
     {
-      "matchDatasources": [
-        "npm"
-      ],
-      "matchUpdateTypes": [
-        "major"
-      ],
+      "matchDatasources": ["npm"],
+      "matchUpdateTypes": ["major"],
       "automerge": false,
       "prPriority": -1,
       "minimumReleaseAge": "7 days",
-      "labels": [
-        "dependencies",
-        "major"
-      ]
+      "labels": ["dependencies", "major"]
     },
     {
-      "matchDatasources": [
-        "npm"
-      ],
-      "matchUpdateTypes": [
-        "patch"
-      ],
-      "labels": [
-        "dependencies",
-        "patch"
-      ]
+      "matchDatasources": ["npm"],
+      "matchUpdateTypes": ["patch"],
+      "labels": ["dependencies", "patch"]
     },
     {
-      "matchDatasources": [
-        "npm"
-      ],
-      "matchUpdateTypes": [
-        "minor"
-      ],
-      "labels": [
-        "dependencies",
-        "minor"
-      ]
+      "matchDatasources": ["npm"],
+      "matchUpdateTypes": ["minor"],
+      "labels": ["dependencies", "minor"]
     }
   ],
   "schedule": ["every weekend"],
@@ -148,8 +85,6 @@
   "prHourlyLimit": 2,
   "lockFileMaintenance": {
     "enabled": true,
-    "schedule": [
-      "every weekend"
-    ]
+    "schedule": ["every weekend"]
   }
 }

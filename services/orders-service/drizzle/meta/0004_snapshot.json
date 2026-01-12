@@ -71,9 +71,7 @@
         "events_idempotency_key_unique": {
           "name": "events_idempotency_key_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "idempotency_key"
-          ]
+          "columns": ["idempotency_key"]
         }
       },
       "policies": {},
@@ -211,9 +209,7 @@
         "orders_idempotency_key_unique": {
           "name": "orders_idempotency_key_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "idempotency_key"
-          ]
+          "columns": ["idempotency_key"]
         }
       },
       "policies": {},
@@ -281,21 +277,12 @@
     "public.order_outbox_status": {
       "name": "order_outbox_status",
       "schema": "public",
-      "values": [
-        "PENDING",
-        "PROCESSING",
-        "SENT",
-        "FAILED"
-      ]
+      "values": ["PENDING", "PROCESSING", "SENT", "FAILED"]
     },
     "public.status": {
       "name": "status",
       "schema": "public",
-      "values": [
-        "PENDING",
-        "PAID",
-        "CANCELLED"
-      ]
+      "values": ["PENDING", "PAID", "CANCELLED"]
     }
   },
   "schemas": {},

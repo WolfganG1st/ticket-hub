@@ -54,9 +54,7 @@
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},
@@ -68,11 +66,7 @@
     "public.roles": {
       "name": "roles",
       "schema": "public",
-      "values": [
-        "CUSTOMER",
-        "ORGANIZER",
-        "ADMIN"
-      ]
+      "values": ["CUSTOMER", "ORGANIZER", "ADMIN"]
     }
   },
   "schemas": {},
