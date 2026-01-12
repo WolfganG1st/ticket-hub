@@ -41,7 +41,6 @@ services:
     environment:
       PORT: 3001
       SERVICE_NAME: accounts-service-http
-      DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@accounts-db:5432/${POSTGRES_DB:-accounts}
       ACCOUNTS_DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@accounts-db:5432/${POSTGRES_DB:-accounts}
       ACCOUNTS_JWT_SECRET: ${ACCOUNTS_JWT_SECRET:-default_secret}
     depends_on:
@@ -64,7 +63,6 @@ services:
     environment:
       PORT: 3001
       SERVICE_NAME: accounts-service-grpc
-      DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@accounts-db:5432/${POSTGRES_DB:-accounts}
       ACCOUNTS_DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@accounts-db:5432/${POSTGRES_DB:-accounts}
       ACCOUNTS_JWT_SECRET: ${ACCOUNTS_JWT_SECRET:-default_secret}
     depends_on:
@@ -106,7 +104,6 @@ services:
     environment:
       PORT: 3002
       SERVICE_NAME: orders-service
-      DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@orders-db:5432/${POSTGRES_DB:-orders}
       ORDERS_DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@orders-db:5432/${POSTGRES_DB:-orders}
       REDIS_URL: redis://redis:6379
       ACCOUNTS_GRPC_URL: accounts-service-grpc:50051
@@ -132,7 +129,6 @@ services:
     environment:
       PORT: 3002
       SERVICE_NAME: orders-service-outbox
-      DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@orders-db:5432/${POSTGRES_DB:-orders}
       ORDERS_DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@orders-db:5432/${POSTGRES_DB:-orders}
       REDIS_URL: redis://redis:6379
       ACCOUNTS_GRPC_URL: accounts-service-grpc:50051

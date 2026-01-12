@@ -17,7 +17,7 @@ async function bootstrapOutboxWorker(): Promise<void> {
 
   const kafka = new Kafka({
     clientId: 'orders-outbox-worker',
-    brokers: env.ORDERS_KAFKA_BROKERS?.split(',').map((broker) => broker.trim()) ?? [],
+    brokers: env.ORDERS_KAFKA_BROKERS.split(',').map((broker) => broker.trim()),
   });
 
   const producer = kafka.producer();

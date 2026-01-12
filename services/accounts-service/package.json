@@ -12,7 +12,7 @@
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
     "db:studio": "drizzle-kit studio",
-    "db:test:push": "DATABASE_URL=postgres://postgres:postgres@localhost:5433/accounts_test drizzle-kit push",
+    "db:test:push": "ACCOUNTS_DATABASE_URL=postgres://postgres:postgres@localhost:5433/accounts_test drizzle-kit push",
     "db:ci:push": "ACCOUNTS_DATABASE_URL=postgres://postgres:postgres@localhost:5433/accounts_test drizzle-kit push --force"
   },
   "dependencies": {
