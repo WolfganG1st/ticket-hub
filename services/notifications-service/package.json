@@ -1,13 +1,11 @@
 {
-  "name": "orders-service",
+  "name": "notifications-service",
   "version": "0.0.0",
   "main": "dist/main.js",
   "scripts": {
     "build": "tsc",
-    "start:http": "node --env-file=.env.orders.dev dist/main-http.js",
-    "start:outbox": "node --env-file=.env.orders.dev dist/main-outbox-worker.js",
-    "dev": "tsx watch --env-file=.env.orders.dev src/main-http.ts",
-    "dev:outbox": "tsx watch --env-file=.env.orders.dev src/main-outbox-worker.ts",
+    "start:kafka": "node --env-file=.env.notifications.dev dist/src/main-kafka.js",
+    "dev": "tsx watch --env-file=.env.notifications.dev src/main-kafka.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "db:push": "drizzle-kit push",
@@ -17,35 +15,23 @@
     "db:ci:push": "ORDERS_DATABASE_URL=postgres://postgres:postgres@localhost:5434/orders_test drizzle-kit push --force"
   },
   "dependencies": {
-    "@grpc/grpc-js": "^1.14.1",
-    "@grpc/proto-loader": "^0.8.0",
     "@ticket-hub/config": "workspace:*",
-    "cors": "^2.8.5",
     "drizzle": "^1.4.0",
     "drizzle-orm": "^0.45.0",
     "drizzle-zod": "^0.8.3",
-    "express": "^5.1.0",
-    "express-rate-limit": "^8.2.1",
-    "helmet": "^8.1.0",
     "kafkajs": "^2.2.4",
     "pg": "^8.16.3",
     "pino": "^10.1.0",
-    "redis": "^5.10.0",
     "shared-kernel": "workspace:*",
     "uuid": "^13.0.0",
-    "vitest": "^4.0.16",
     "zod": "^4.1.13"
   },
   "devDependencies": {
-    "@ticket-hub/testkit": "workspace:*",
-    "@total-typescript/shoehorn": "^0.1.2",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.5",
     "@types/pg": "^8.15.6",
-    "@types/supertest": "^6.0.3",
     "dotenv": "^17.2.3",
     "drizzle-kit": "^0.31.7",
     "pino-pretty": "^13.1.2",
-    "supertest": "^7.1.4"
+    "vitest": "^4.0.15",
+    "@ticket-hub/testkit": "workspace:*"
   }
 }

@@ -128,7 +128,7 @@ export class AccountsGrpcClient implements AccountsClient {
         callback: (err: Error | null, res?: TWire) => void,
       ) => void;
 
-      method(request, metadata, { deadline }, (err: Error | null, res?: TWire) => {
+      method.call(this.client, request, metadata, { deadline }, (err: Error | null, res?: TWire) => {
         if (err) {
           reject(err);
           return;

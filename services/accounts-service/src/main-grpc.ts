@@ -14,7 +14,7 @@ function bootstrapGrpc(): void {
   const env = loadAccountsEnv();
   const db = createDb(env.ACCOUNTS_DATABASE_URL);
 
-  const protoPath = path.join(__dirname, '../../../../infra/proto/accounts.proto');
+  const protoPath = path.join(__dirname, '../../../infra/proto/accounts.proto');
 
   const packageDefinition = loadSync(protoPath, {
     keepCase: false,

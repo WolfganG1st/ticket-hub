@@ -20,3 +20,6 @@ export const orderPaidEventSchema = z.object({
 });
 
 export type OrderPaidEvent = z.infer<typeof orderPaidEventSchema>;
+
+export const orderEventSchema = z.discriminatedUnion('eventName', [orderCreatedEventSchema, orderPaidEventSchema]);
+export type OrderEvent = z.infer<typeof orderEventSchema>;

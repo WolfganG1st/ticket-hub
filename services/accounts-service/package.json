@@ -8,6 +8,7 @@
     "start:http": "node --env-file=.env.accounts.dev dist/src/main-http.js",
     "start:grpc": "node --env-file=.env.accounts.dev dist/src/main-grpc.js",
     "dev": "tsx watch --env-file=.env.accounts.dev src/main-http.ts",
+    "dev:grpc": "tsx watch --env-file=.env.accounts.dev src/main-grpc.ts",
     "test": "vitest run",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",

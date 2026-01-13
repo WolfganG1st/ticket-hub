@@ -4,8 +4,8 @@ import { logger } from 'shared-kernel';
 export async function createRedisClient(url: string): Promise<RedisClientType> {
   const client: RedisClientType = createClient({ url });
 
-  client.on('error', (err) => {
-    logger.error(`Redis error: ${err}`);
+  client.on('error', (error) => {
+    logger.error(error, 'Redis error');
   });
 
   await client.connect();

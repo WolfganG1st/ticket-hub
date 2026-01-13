@@ -48,6 +48,6 @@ async function bootstrapOutboxWorker(): Promise<void> {
 }
 
 bootstrapOutboxWorker().catch((error) => {
-  logger.error('Outbox worker failed to start:', error);
+  logger.error(error, 'Outbox worker failed to start');
   process.exit(1);
 });

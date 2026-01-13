@@ -157,18 +157,20 @@ services:
       KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_NODE_ID: 1
       KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
-      KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://0.0.0.0:9094,CONTROLLER://kafka:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9094
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     ports:
       - "9092:9092"
+      - "9094:9094"
     restart:
       unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list"]
+      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9094 --list"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -231,9 +233,55 @@ services:
     ports:
       - "4000:4000"
 
+  notifications-db:
+    image: postgres:16-alpine
+    container_name: notifications-db
+    profiles: ["infra", "stack"]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-notifications}
+    restart:
+      unless-stopped
+    ports:
+      - "5435:5432"
+    volumes:
+      - notifications-db-data:/var/lib/postgresql/data
+      - ../postgres/notifications-init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  notifications-service:
+    profiles: ["stack"]
+    build:
+      context: ../../
+      dockerfile: services/notifications-service/Dockerfile
+    container_name: notifications-service
+    environment:
+      PORT: 3010
+      SERVICE_NAME: notifications-service
+      NOTIFICATIONS_DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@notifications-db:5432/notifications
+      NOTIFICATIONS_KAFKA_BROKERS: kafka:9092
+      NOTIFICATIONS_KAFKA_TOPIC: orders.events
+      NOTIFICATIONS_CONSUMER_GROUP_ID: notifications.v1
+    depends_on:
+      notifications-db:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    command: >
+      sh -c "
+        pnpm --filter notifications-service run build &&
+        pnpm --filter notifications-service run start:kafka
+      "
+
+
 volumes:
   redis-data:
   redisinsight-data:
   accounts-db-data:
   orders-db-data:
-
+  notifications-db-data:

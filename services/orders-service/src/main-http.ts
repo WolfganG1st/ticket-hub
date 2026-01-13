@@ -31,6 +31,6 @@ async function bootstrapHttp(): Promise<void> {
 }
 
 bootstrapHttp().catch((error) => {
-  logger.error(`Failed to start Orders service, ${error}`);
+  logger.error(error, 'Failed to start Orders service');
   process.exit(1);
 });

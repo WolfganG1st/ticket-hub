@@ -47,7 +47,7 @@ export const processOutboxBatch = async (input: ProcessOutboxBatchInput): Promis
 
       await outboxRepository.markAsSent(event.id);
     } catch (error) {
-      logger.error(`Failed to publish outbox event ${event.id}, ${error}`);
+      logger.error(error, `Failed to publish outbox event ${event.id}`);
       await outboxRepository.markAsFailed(event.id, (error as Error).message);
     }
   }
@@ -75,7 +75,7 @@ export function startOrderOutboxWorker(input: StartOrderOutboxWorkerInput): Orde
         await processOutboxBatch({ outboxRepository, producer, topic, batchSize });
         await sleepCancellable(pollIntervalMs);
       } catch (error) {
-        logger.error(`Outbox worker loop error ${error}`);
+        logger.error(error, 'Outbox worker loop error');
         await sleepCancellable(pollIntervalMs);
       }
     }
@@ -100,7 +100,7 @@ export function startOrderOutboxWorker(input: StartOrderOutboxWorkerInput): Orde
   };
 
   loopPromise = processLoop().catch((error) => {
-    logger.error('Outbox worker fatal error:', error);
+    logger.error(error, 'Outbox worker fatal error');
   });
 
   return { shutdown };

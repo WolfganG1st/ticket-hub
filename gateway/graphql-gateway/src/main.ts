@@ -73,7 +73,7 @@ async function bootstrap(): Promise<void> {
 
 if (require.main === module) {
   bootstrap().catch((error) => {
-    logger.error(`Failed to start GraphQl Gateway, ${error}`);
+    logger.error(error, 'Failed to start GraphQl Gateway');
     process.exit(1);
   });
 }
