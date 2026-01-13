@@ -22,7 +22,6 @@
     "@ticket-hub/config": "workspace:*",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
-    "drizzle": "^1.4.0",
     "drizzle-orm": "^0.45.0",
     "drizzle-zod": "^0.8.3",
     "express": "^5.1.0",
@@ -36,6 +35,7 @@
     "zod": "^4.1.13"
   },
   "devDependencies": {
+    "@ticket-hub/testkit": "workspace:*",
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
@@ -46,7 +46,6 @@
     "drizzle-kit": "^0.31.7",
     "pino-pretty": "^13.1.2",
     "supertest": "^7.1.4",
-    "vitest": "^4.0.15",
-    "@ticket-hub/testkit": "workspace:*"
+    "vitest": "^4.0.15"
   }
 }

@@ -21,7 +21,6 @@
     "@grpc/proto-loader": "^0.8.0",
     "@ticket-hub/config": "workspace:*",
     "cors": "^2.8.5",
-    "drizzle": "^1.4.0",
     "drizzle-orm": "^0.45.0",
     "drizzle-zod": "^0.8.3",
     "express": "^5.1.0",
