@@ -198,3 +198,8 @@ jobs:
           ACCOUNTS_GRPC_URL: localhost:50051
           ACCOUNTS_BASE_URL: http://localhost:3999
           ORDERS_BASE_URL: http://localhost:3998
+          ORDERS_KAFKA_BROKERS: localhost:9092
+          ORDERS_KAFKA_TOPIC: orders.events
+          NOTIFICATIONS_KAFKA_BROKERS: localhost:9092
+          NOTIFICATIONS_KAFKA_TOPIC: orders.events
+          NOTIFICATIONS_CONSUMER_GROUP_ID: notifications-service-test
