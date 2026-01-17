@@ -43,7 +43,7 @@
       "scrypt": "npm:scrypt-js@^3.0.1",
       "keccak": "npm:js-sha3@^0.9.3",
       "secp256k1": "npm:@noble/secp256k1@^3.0.0",
-      "esbuild": "^0.25.0"
+      "esbuild": "^0.27.0"
     }
   }
 }
