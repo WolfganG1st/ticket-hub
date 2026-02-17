@@ -17,7 +17,7 @@ importers:
     devDependencies:
       '@biomejs/biome':
         specifier: ^2.3.10
-        version: 2.3.15
+        version: 2.4.2
       '@types/node':
         specifier: ^24.10.4
         version: 24.10.13
@@ -62,7 +62,7 @@ importers:
         version: 16.12.0
       redis:
         specifier: ^5.10.0
-        version: 5.10.0
+        version: 5.11.0
       shared-kernel:
         specifier: workspace:*
         version: link:../../packages/shared-kernel
@@ -121,7 +121,7 @@ importers:
         version: 8.18.0
       redis:
         specifier: ^5.10.0
-        version: 5.10.0
+        version: 5.11.0
     devDependencies:
       '@types/node':
         specifier: ^24.10.1
@@ -307,7 +307,7 @@ importers:
         version: 10.3.1
       redis:
         specifier: ^5.10.0
-        version: 5.10.0
+        version: 5.11.0
       shared-kernel:
         specifier: workspace:*
         version: link:../../packages/shared-kernel
@@ -444,59 +444,59 @@ packages:
       '@apollo/server': ^4.0.0 || ^5.0.0
       express: ^5.0.0
 
-  '@biomejs/biome@2.3.15':
-    resolution: {integrity: sha512-u+jlPBAU2B45LDkjjNNYpc1PvqrM/co4loNommS9/sl9oSxsAQKsNZejYuUztvToB5oXi1tN/e62iNd6ESiY3g==}
+  '@biomejs/biome@2.4.2':
+    resolution: {integrity: sha512-vVE/FqLxNLbvYnFDYg3Xfrh1UdFhmPT5i+yPT9GE2nTUgI4rkqo5krw5wK19YHBd7aE7J6r91RRmb8RWwkjy6w==}
     engines: {node: '>=14.21.3'}
     hasBin: true
 
-  '@biomejs/cli-darwin-arm64@2.3.15':
-    resolution: {integrity: sha512-SDCdrJ4COim1r8SNHg19oqT50JfkI/xGZHSyC6mGzMfKrpNe/217Eq6y98XhNTc0vGWDjznSDNXdUc6Kg24jbw==}
+  '@biomejs/cli-darwin-arm64@2.4.2':
+    resolution: {integrity: sha512-3pEcKCP/1POKyaZZhXcxFl3+d9njmeAihZ17k8lL/1vk+6e0Cbf0yPzKItFiT+5Yh6TQA4uKvnlqe0oVZwRxCA==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [darwin]
 
-  '@biomejs/cli-darwin-x64@2.3.15':
-    resolution: {integrity: sha512-RkyeSosBtn3C3Un8zQnl9upX0Qbq4E3QmBa0qjpOh1MebRbHhNlRC16jk8HdTe/9ym5zlfnpbb8cKXzW+vlTxw==}
+  '@biomejs/cli-darwin-x64@2.4.2':
+    resolution: {integrity: sha512-P7hK1jLVny+0R9UwyGcECxO6sjETxfPyBm/1dmFjnDOHgdDPjPqozByunrwh4xPKld8sxOr5eAsSqal5uKgeBg==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [darwin]
 
-  '@biomejs/cli-linux-arm64-musl@2.3.15':
-    resolution: {integrity: sha512-SSSIj2yMkFdSkXqASzIBdjySBXOe65RJlhKEDlri7MN19RC4cpez+C0kEwPrhXOTgJbwQR9QH1F4+VnHkC35pg==}
+  '@biomejs/cli-linux-arm64-musl@2.4.2':
+    resolution: {integrity: sha512-/x04YK9+7erw6tYEcJv9WXoBHcULI/wMOvNdAyE9S3JStZZ9yJyV67sWAI+90UHuDo/BDhq0d96LDqGlSVv7WA==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [linux]
     libc: [musl]
 
-  '@biomejs/cli-linux-arm64@2.3.15':
-    resolution: {integrity: sha512-FN83KxrdVWANOn5tDmW6UBC0grojchbGmcEz6JkRs2YY6DY63sTZhwkQ56x6YtKhDVV1Unz7FJexy8o7KwuIhg==}
+  '@biomejs/cli-linux-arm64@2.4.2':
+    resolution: {integrity: sha512-DI3Mi7GT2zYNgUTDEbSjl3e1KhoP76OjQdm8JpvZYZWtVDRyLd3w8llSr2TWk1z+U3P44kUBWY3X7H9MD1/DGQ==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@biomejs/cli-linux-x64-musl@2.3.15':
-    resolution: {integrity: sha512-dbjPzTh+ijmmNwojFYbQNMFp332019ZDioBYAMMJj5Ux9d8MkM+u+J68SBJGVwVeSHMYj+T9504CoxEzQxrdNw==}
+  '@biomejs/cli-linux-x64-musl@2.4.2':
+    resolution: {integrity: sha512-wbBmTkeAoAYbOQ33f6sfKG7pcRSydQiF+dTYOBjJsnXO2mWEOQHllKlC2YVnedqZFERp2WZhFUoO7TNRwnwEHQ==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [linux]
     libc: [musl]
 
-  '@biomejs/cli-linux-x64@2.3.15':
-    resolution: {integrity: sha512-T8n9p8aiIKOrAD7SwC7opiBM1LYGrE5G3OQRXWgbeo/merBk8m+uxJ1nOXMPzfYyFLfPlKF92QS06KN1UW+Zbg==}
+  '@biomejs/cli-linux-x64@2.4.2':
+    resolution: {integrity: sha512-GK2ErnrKpWFigYP68cXiCHK4RTL4IUWhK92AFS3U28X/nuAL5+hTuy6hyobc8JZRSt+upXt1nXChK+tuHHx4mA==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@biomejs/cli-win32-arm64@2.3.15':
-    resolution: {integrity: sha512-puMuenu/2brQdgqtQ7geNwQlNVxiABKEZJhMRX6AGWcmrMO8EObMXniFQywy2b81qmC+q+SDvlOpspNwz0WiOA==}
+  '@biomejs/cli-win32-arm64@2.4.2':
+    resolution: {integrity: sha512-k2uqwLYrNNxnaoiW3RJxoMGnbKda8FuCmtYG3cOtVljs3CzWxaTR+AoXwKGHscC9thax9R4kOrtWqWN0+KdPTw==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [win32]
 
-  '@biomejs/cli-win32-x64@2.3.15':
-    resolution: {integrity: sha512-kDZr/hgg+igo5Emi0LcjlgfkoGZtgIpJKhnvKTRmMBv6FF/3SDyEV4khBwqNebZIyMZTzvpca9sQNSXJ39pI2A==}
+  '@biomejs/cli-win32-x64@2.4.2':
+    resolution: {integrity: sha512-9ma7C4g8Sq3cBlRJD2yrsHXB1mnnEBdpy7PhvFrylQWQb4PoyCmPucdX7frvsSBQuFtIiKCrolPl/8tCZrKvgQ==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [win32]
@@ -746,33 +746,38 @@ packages:
   '@protobufjs/utf8@1.1.0':
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
 
-  '@redis/bloom@5.10.0':
-    resolution: {integrity: sha512-doIF37ob+l47n0rkpRNgU8n4iacBlKM9xLiP1LtTZTvz8TloJB8qx/MgvhMhKdYG+CvCY2aPBnN2706izFn/4A==}
+  '@redis/bloom@5.11.0':
+    resolution: {integrity: sha512-KYiVilAhAFN3057afUb/tfYJpsEyTkQB+tQcn5gVVA7DgcNOAj8lLxe4j8ov8BF6I9C1Fe/kwlbuAICcTMX8Lw==}
     engines: {node: '>= 18'}
     peerDependencies:
-      '@redis/client': ^5.10.0
+      '@redis/client': ^5.11.0
 
-  '@redis/client@5.10.0':
-    resolution: {integrity: sha512-JXmM4XCoso6C75Mr3lhKA3eNxSzkYi3nCzxDIKY+YOszYsJjuKbFgVtguVPbLMOttN4iu2fXoc2BGhdnYhIOxA==}
-    engines: {node: '>= 18'}
-
-  '@redis/json@5.10.0':
-    resolution: {integrity: sha512-B2G8XlOmTPUuZtD44EMGbtoepQG34RCDXLZbjrtON1Djet0t5Ri7/YPXvL9aomXqP8lLTreaprtyLKF4tmXEEA==}
+  '@redis/client@5.11.0':
+    resolution: {integrity: sha512-GHoprlNQD51Xq2Ztd94HHV94MdFZQ3CVrpA04Fz8MVoHM0B7SlbmPEVIjwTbcv58z8QyjnrOuikS0rWF03k5dQ==}
     engines: {node: '>= 18'}
     peerDependencies:
-      '@redis/client': ^5.10.0
+      '@node-rs/xxhash': ^1.1.0
+    peerDependenciesMeta:
+      '@node-rs/xxhash':
+        optional: true
 
-  '@redis/search@5.10.0':
-    resolution: {integrity: sha512-3SVcPswoSfp2HnmWbAGUzlbUPn7fOohVu2weUQ0S+EMiQi8jwjL+aN2p6V3TI65eNfVsJ8vyPvqWklm6H6esmg==}
+  '@redis/json@5.11.0':
+    resolution: {integrity: sha512-1iAy9kAtcD0quB21RbPTbUqqy+T2Uu2JxucwE+B4A+VaDbIRvpZR6DMqV8Iqaws2YxJYB3GC5JVNzPYio2ErUg==}
     engines: {node: '>= 18'}
     peerDependencies:
-      '@redis/client': ^5.10.0
+      '@redis/client': ^5.11.0
 
-  '@redis/time-series@5.10.0':
-    resolution: {integrity: sha512-cPkpddXH5kc/SdRhF0YG0qtjL+noqFT0AcHbQ6axhsPsO7iqPi1cjxgdkE9TNeKiBUUdCaU1DbqkR/LzbzPBhg==}
+  '@redis/search@5.11.0':
+    resolution: {integrity: sha512-g1l7f3Rnyk/xI99oGHIgWHSKFl45Re5YTIcO8j/JE8olz389yUFyz2+A6nqVy/Zi031VgPDWscbbgOk8hlhZ3g==}
     engines: {node: '>= 18'}
     peerDependencies:
-      '@redis/client': ^5.10.0
+      '@redis/client': ^5.11.0
+
+  '@redis/time-series@5.11.0':
+    resolution: {integrity: sha512-TWFeOcU4xkj0DkndnOyhtxvX1KWD+78UHT3XX3x3XRBUGWeQrKo3jqzDsZwxbggUgf9yLJr/akFHXru66X5UQA==}
+    engines: {node: '>= 18'}
+    peerDependencies:
+      '@redis/client': ^5.11.0
 
   '@rollup/rollup-android-arm-eabi@4.57.1':
     resolution: {integrity: sha512-A6ehUVSiSaaliTxai040ZpZ2zTevHYbvu/lDoeAteHI8QnaosIzm4qwtezfRg1jOYaUmnzLX1AOD6Z+UJjtifg==}
@@ -1757,8 +1762,8 @@ packages:
     resolution: {integrity: sha512-57frrGM/OCTLqLOAh0mhVA9VBMHd+9U7Zb2THMGdBUoZVOtGbJzjxsYGDJ3A9AYYCP4hn6y1TVbaOfzWtm5GFg==}
     engines: {node: '>= 12.13.0'}
 
-  redis@5.10.0:
-    resolution: {integrity: sha512-0/Y+7IEiTgVGPrLFKy8oAEArSyEJkU0zvgV5xyi9NzNQ+SLZmyFbUsWIbgPcd4UdUh00opXGKlXJwMmsis5Byw==}
+  redis@5.11.0:
+    resolution: {integrity: sha512-YwXjATVDT+AuxcyfOwZn046aml9jMlQPvU1VXIlLDVAExe0u93aTfPYSeRgG4p9Q/Jlkj+LXJ1XEoFV+j2JKcQ==}
     engines: {node: '>= 18'}
 
   require-directory@2.1.1:
@@ -2199,39 +2204,39 @@ snapshots:
       '@apollo/server': 5.4.0(graphql@16.12.0)
       express: 5.2.1
 
-  '@biomejs/biome@2.3.15':
+  '@biomejs/biome@2.4.2':
     optionalDependencies:
-      '@biomejs/cli-darwin-arm64': 2.3.15
-      '@biomejs/cli-darwin-x64': 2.3.15
-      '@biomejs/cli-linux-arm64': 2.3.15
-      '@biomejs/cli-linux-arm64-musl': 2.3.15
-      '@biomejs/cli-linux-x64': 2.3.15
-      '@biomejs/cli-linux-x64-musl': 2.3.15
-      '@biomejs/cli-win32-arm64': 2.3.15
-      '@biomejs/cli-win32-x64': 2.3.15
+      '@biomejs/cli-darwin-arm64': 2.4.2
+      '@biomejs/cli-darwin-x64': 2.4.2
+      '@biomejs/cli-linux-arm64': 2.4.2
+      '@biomejs/cli-linux-arm64-musl': 2.4.2
+      '@biomejs/cli-linux-x64': 2.4.2
+      '@biomejs/cli-linux-x64-musl': 2.4.2
+      '@biomejs/cli-win32-arm64': 2.4.2
+      '@biomejs/cli-win32-x64': 2.4.2
 
-  '@biomejs/cli-darwin-arm64@2.3.15':
+  '@biomejs/cli-darwin-arm64@2.4.2':
     optional: true
 
-  '@biomejs/cli-darwin-x64@2.3.15':
+  '@biomejs/cli-darwin-x64@2.4.2':
     optional: true
 
-  '@biomejs/cli-linux-arm64-musl@2.3.15':
+  '@biomejs/cli-linux-arm64-musl@2.4.2':
     optional: true
 
-  '@biomejs/cli-linux-arm64@2.3.15':
+  '@biomejs/cli-linux-arm64@2.4.2':
     optional: true
 
-  '@biomejs/cli-linux-x64-musl@2.3.15':
+  '@biomejs/cli-linux-x64-musl@2.4.2':
     optional: true
 
-  '@biomejs/cli-linux-x64@2.3.15':
+  '@biomejs/cli-linux-x64@2.4.2':
     optional: true
 
-  '@biomejs/cli-win32-arm64@2.3.15':
+  '@biomejs/cli-win32-arm64@2.4.2':
     optional: true
 
-  '@biomejs/cli-win32-x64@2.3.15':
+  '@biomejs/cli-win32-x64@2.4.2':
     optional: true
 
   '@drizzle-team/brocli@0.10.2': {}
@@ -2396,25 +2401,25 @@ snapshots:
 
   '@protobufjs/utf8@1.1.0': {}
 
-  '@redis/bloom@5.10.0(@redis/client@5.10.0)':
+  '@redis/bloom@5.11.0(@redis/client@5.11.0)':
     dependencies:
-      '@redis/client': 5.10.0
+      '@redis/client': 5.11.0
 
-  '@redis/client@5.10.0':
+  '@redis/client@5.11.0':
     dependencies:
       cluster-key-slot: 1.1.2
 
-  '@redis/json@5.10.0(@redis/client@5.10.0)':
+  '@redis/json@5.11.0(@redis/client@5.11.0)':
     dependencies:
-      '@redis/client': 5.10.0
+      '@redis/client': 5.11.0
 
-  '@redis/search@5.10.0(@redis/client@5.10.0)':
+  '@redis/search@5.11.0(@redis/client@5.11.0)':
     dependencies:
-      '@redis/client': 5.10.0
+      '@redis/client': 5.11.0
 
-  '@redis/time-series@5.10.0(@redis/client@5.10.0)':
+  '@redis/time-series@5.11.0(@redis/client@5.11.0)':
     dependencies:
-      '@redis/client': 5.10.0
+      '@redis/client': 5.11.0
 
   '@rollup/rollup-android-arm-eabi@4.57.1':
     optional: true
@@ -3293,13 +3298,15 @@ snapshots:
 
   real-require@0.2.0: {}
 
-  redis@5.10.0:
+  redis@5.11.0:
     dependencies:
-      '@redis/bloom': 5.10.0(@redis/client@5.10.0)
-      '@redis/client': 5.10.0
-      '@redis/json': 5.10.0(@redis/client@5.10.0)
-      '@redis/search': 5.10.0(@redis/client@5.10.0)
-      '@redis/time-series': 5.10.0(@redis/client@5.10.0)
+      '@redis/bloom': 5.11.0(@redis/client@5.11.0)
+      '@redis/client': 5.11.0
+      '@redis/json': 5.11.0(@redis/client@5.11.0)
+      '@redis/search': 5.11.0(@redis/client@5.11.0)
+      '@redis/time-series': 5.11.0(@redis/client@5.11.0)
+    transitivePeerDependencies:
+      - '@node-rs/xxhash'
 
   require-directory@2.1.1: {}
 
