@@ -22,7 +22,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
-    "@types/supertest": "^6.0.3",
+    "@types/supertest": "^7.0.0",
     "pino-pretty": "^13.1.2",
     "supertest": "^7.1.4",
     "@ticket-hub/testkit": "workspace:*"
