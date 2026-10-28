@@ -9,7 +9,7 @@
     "redis": "^5.10.0"
   },
   "devDependencies": {
-    "@types/node": "^24.10.1",
+    "@types/node": "^26.0.0",
     "@types/pg": "^8.15.6"
   }
 }
